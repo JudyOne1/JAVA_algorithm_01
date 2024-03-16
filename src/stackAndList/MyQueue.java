@@ -5,8 +5,16 @@ import java.util.Stack;
 /**
  * 1）如何用栈结构实现队列结构
  * 思路：
- * push栈 和 pop栈 (1. 一次性倒完push栈数据；2. pop没拿完不能倒数据【pop空了才能倒数据】)
+ * push栈 和 pop栈
+ * (1. 一次性倒完push栈数据；2. pop没拿完不能倒数据【pop空了才能倒数据】)
  *                                               👆反正是队列所以不碍事
+ *  >> 5 4 3 2 1 ||  push
+ *  >> null ||  pop
+ *
+ *  >> null || push
+ *  >> 1 2 3 4 5 ||  pop 弹出的顺序正是 出队列 的顺序
+ *
+ *
  *
  * 2）如何用队列结构实现栈结构
  * 思路：
@@ -23,19 +31,35 @@ class MyQueue {
     }
 
     public void push(int x) {
-
+        stackPush.push(x);
     }
 
     public int pop() {
-        return 0;
+        if (!stackPop.isEmpty()) {
+            return stackPop.pop();
+        }else {
+            //需要将 push栈的数据倒到pop栈
+            while (!stackPush.isEmpty()) {
+                stackPop.push(stackPush.pop());
+            }
+            return stackPop.pop();
+        }
     }
 
     public int peek() {
-        return 0;
+        if (!stackPop.isEmpty()) {
+            return stackPop.peek();
+        }else {
+            //需要将 push栈的数据倒到pop栈
+            while (!stackPush.isEmpty()) {
+                stackPop.push(stackPush.pop());
+            }
+            return stackPop.peek();
+        }
     }
 
     public boolean empty() {
-        return false;
+        return stackPop.isEmpty()&&stackPush.isEmpty();
     }
 }
 

@@ -3,6 +3,11 @@ package stackAndList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * 使用两个队列实现一个栈
+ * @param <T>
+ */
+
 
 public class TwoQueueStack<T> {
     public Queue<T> queue;
