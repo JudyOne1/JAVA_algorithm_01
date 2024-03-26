@@ -11,32 +11,54 @@ import java.util.List;
  * 数组中可能含有重复元素，如出现两个整数相等，也可以视作递增序列的一种特殊情况。
  */
 public class leetcode491 {
-    public List<List<Integer>> findSubsequences(int[] nums) {
-        //不可以重新排序，是递增序列，相等也算。最少两个
-        List<List<Integer>> result = new ArrayList<>();
-        LinkedList<Integer> path = new LinkedList<>();
+    /**
+     * 查找给定整数数组中的所有子序列，这些子序列至少包含两个元素，且不必重新排序，同时满足子序列是递增的或相等的。
+     *
+     * @param nums 整数数组，提供给查找子序列的源数据。
+     * @return 返回一个列表，其中包含输入数组中所有满足条件的不重复子序列。
+     */
+        public List<List<Integer>> findSubsequences(int[] nums) {
+            // 结果集合，用于存放所有满足条件的子序列
+            List<List<Integer>> result = new ArrayList<>();
+            // 当前探索路径，即当前构建的子序列
+            LinkedList<Integer> path = new LinkedList<>();
 
-        int index = 0;
-        process(result,path,nums,index);
-        HashSet<List<Integer>> set = new HashSet<>(result);
+            // 初始化处理过程
+            int index = 0;
+            process(result, path, nums, index);
 
-        return new ArrayList<>(set);
-    }
+            // 使用集合去重，因为过程中可能会产生重复的子序列
+            HashSet<List<Integer>> set = new HashSet<>(result);
 
-    private void process(List<List<Integer>> result, LinkedList<Integer> path, int[] nums, int index) {
-        if(path.size()>=2){
-            result.add(new ArrayList<>(path));
+            // 返回去重后的结果集合
+            return new ArrayList<>(set);
         }
-        for (int i = index; i < nums.length; i++){
-            //path为空，或者递增，就可以添加
-            if(path.isEmpty() || nums[i] >= path.getLast()){
-                path.add(nums[i]);//为什么没有 46 44
-                process(result,path,nums,i+1);
-                path.removeLast();
+
+        /**
+         * 递归处理函数，用于生成所有可能的满足条件的子序列。
+         *
+         * @param result 存放结果的集合
+         * @param path 当前探索的路径，即正在构建的子序列
+         * @param nums 整数数组，源数据
+         * @param index 当前处理元素的索引
+         */
+        private void process(List<List<Integer>> result, LinkedList<Integer> path, int[] nums, int index) {
+            // 当路径长度大于等于2时，将当前路径加入结果集合，因为最短的子序列也需要两个元素
+            if (path.size() >= 2) {
+                result.add(new ArrayList<>(path));
             }
-
+            // 遍历数组，尝试将当前元素加入路径中
+            for (int i = index; i < nums.length; i++) {
+                // 当路径为空，或者当前元素大于等于路径的最后一个元素时，可以将当前元素加入路径
+                if (path.isEmpty() || nums[i] >= path.getLast()) {
+                    path.add(nums[i]);
+                    // 递归继续探索加入新元素后的路径
+                    process(result, path, nums, i + 1);
+                    // 回溯，移除最后一个加入的元素
+                    path.removeLast();
+                }
+            }
         }
-    }
 
     public static void main(String[] args) {
         leetcode491 test = new leetcode491();
