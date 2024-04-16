@@ -6,6 +6,83 @@ import java.util.List;
 
 public class leetcode438 {
     public List<Integer> findAnagrams(String s, String p) {
+        int n = s.length(), m = p.length();
+        List<Integer> res = new ArrayList<>();
+        // 如果字符串s的长度小于字符串p的长度，则直接返回空结果列表
+        if(n < m) return res;
+
+        // 用于统计字符串p和滑动窗口中字符的频次
+        int[] pCnt = new int[26];
+        int[] sCnt = new int[26];
+
+        // 初始化：统计字符串p中各字符的频次
+        for(int i = 0; i < m; i++){
+            pCnt[p.charAt(i) - 'a']++;
+            sCnt[s.charAt(i) - 'a']++;
+        }
+
+        // 如果滑动窗口的字符频次与字符串p的字符频次相等，则将起始位置0加入结果列表
+        if(Arrays.equals(sCnt, pCnt)){
+            res.add(0);
+        }
+
+        // 滑动窗口从第m个字符开始，更新字符频次并检查是否与p的字符频次相等
+        for(int i = m; i < n; i++){
+            sCnt[s.charAt(i - m) - 'a']--; // 窗口左侧字符出窗口，频次减1
+            sCnt[s.charAt(i) - 'a']++; // 窗口右侧字符进窗口，频次加1
+            if(Arrays.equals(sCnt, pCnt)){
+                // 如果滑动窗口的字符频次与字符串p的字符频次相等，将当前位置加入结果列表
+                res.add(i - m + 1);
+            }
+        }
+        return res;
+    }
+
+    public List<Integer> findAnagrams1(String s, String p) {
+        int left = 0, right = 0;
+        ArrayList<Integer> ans = new ArrayList<>();
+        while (right < s.length()) {
+            // 窗口右边界右移
+            right++;
+            // 窗口长度大于目标字符串长度，窗口左边界右移
+            if (right - left == p.length()) {
+                // 窗口长度等于目标字符串长度，判断窗口内字符是否与目标字符串相同
+                if (isCovered(s.substring(left, right), p)) {
+                    ans.add(left);
+                }
+                // 窗口左边界右移
+                left++;
+            }
+        }
+
+        return ans;
+    }
+
+    private boolean isCovered(String substring, String p) {
+
+        // 将字符串p转换为字符数组，并按字典序排序
+        char[] targetChars = p.toCharArray();
+        Arrays.sort(targetChars);
+        p = new String(targetChars);
+
+        // 将字符串substring转换为字符数组，并按字典序排序
+        char[] sourceChars = substring.toCharArray();
+        Arrays.sort(sourceChars);
+        substring = new String(sourceChars);
+
+        // 比较排序后的两个字符串是否相等，不相等则两个字符串不是字母异位词
+        if (!substring.equals(p)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public static void main(String[] args) {
+        new leetcode438().findAnagrams1("baa", "aa");
+    }
+
+    public List<Integer> findAnagrams2(String s, String p) {
         // 将目标字符串转换为字符数组并排序，以便之后比较
         char[] targetChars = p.toCharArray();
         Arrays.sort(targetChars);

@@ -9,19 +9,19 @@ public class leetcode53 {
         if (nums.length == 1){
             return nums[0];
         }
-        int sum = Integer.MIN_VALUE;
+        int ans = Integer.MIN_VALUE;
         int count = 0;
         // 遍历数组，计算连续子数组的和
         for (int i = 0; i < nums.length; i++){
             count += nums[i];
             // 更新最大和
-            sum = Math.max(sum, count);
+            ans = Math.max(ans, count);
             // 如果当前累计和小于等于0，重置累计和为0，拉低总和
             if (count <= 0){
                 count = 0;
             }
         }
-        return sum;
+        return ans;
 //        if (nums.length == 0) {
 //            return 0;
 //        } else if (nums.length == 1) {

@@ -5,19 +5,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class leetcode3 {
-    public int lengthOfLongestSubstring(String s) {
-        int n = s.length(), ans = 0; // n为字符串长度，ans用于存储最长子串长度
-        Map<Character, Integer> map = new HashMap<>(); // 使用HashMap存储字符及其最近出现的位置
 
-        for (int end = 0, start = 0; end < n; end++) { // end指向当前遍历到的字符位置
-            char alpha = s.charAt(end); // 当前字符
-            if (map.containsKey(alpha)) { // 如果当前字符已经在HashMap中存在
-                start = Math.max(map.get(alpha), start); // 更新start位置为当前字符或之前出现的同一字符的下一个位置
+    public int lengthOfLongestSubstring(String s) {
+        char[] chars = s.toCharArray(); // 将字符串转换为字符数组，以提高访问速度
+        int n = chars.length, ans = 0, left = 0;
+        boolean[] has = new boolean[128]; // 使用boolean数组来快速判断字符是否出现过，基于ASCII码，覆盖所有英文字符
+
+        for (int right = 0; right < n; right++) {
+            char rightChar = chars[right];
+            // 如果当前字符已经存在于窗口内，则移动左边界，直到该字符不再存在于窗口内
+            while (has[rightChar]) {
+                char leftChar = chars[left];
+                has[leftChar] = false; // 移除左边界字符的标记
+                left++;
             }
-            ans = Math.max(ans, end - start + 1); // 更新最长子串长度
-            map.put(s.charAt(end), end + 1); // 更新字符的最近出现位置
+            has[rightChar] = true; // 标记当前字符c已经存在于窗口内
+            ans = Math.max(ans, right - left + 1); // 更新最长无重复字符子串的长度
         }
-        return ans; // 返回最长子串长度
+        return ans;
     }
 
 

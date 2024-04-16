@@ -6,16 +6,15 @@ public class leetcode209 {
     //滑动窗口
     public static int minSubArrayLen(int target, int[] nums) {
 
-        int left = 0, right = 0, sum = 0, min = Integer.MAX_VALUE;
-        while (right < nums.length) {
-            sum += nums[right++];
-            while (sum >= target) {
-                min = Math.min(min, right - left);
-                sum -= nums[left++];
+        int left = 0, right = 0, sum = 0, min = Integer.MAX_VALUE; // 初始化变量，min用于记录最小窗口长度
+        while (right < nums.length) { // 右指针遍历数组
+            sum += nums[right++]; // 将右指针指向的元素加到当前和上
+            while (sum >= target) { // 当 当前和大于等于目标值时，收缩窗口
+                min = Math.min(min, right - left); // 更新最小窗口长度
+                sum -= nums[left++]; // 将左指针指向的元素从当前和中减去
             }
         }
-        return min == Integer.MAX_VALUE ? 0 : min;
-
+        return min == Integer.MAX_VALUE ? 0 : min; // 如果未找到满足条件的窗口，返回0，否则返回最小窗口长度
     }
 
 
