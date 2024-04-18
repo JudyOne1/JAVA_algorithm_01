@@ -38,6 +38,21 @@ public class leetcode203 {
 //        }
         return head;
     }
+    public ListNode removeElements1(ListNode head, int val) {
+        ListNode cur = head;
+        ListNode pre = null;
+        ListNode temp = null;
+        while (true){
+            if (cur == null){
+                break;
+            }
+            temp = cur.next;
+            cur.next = pre;//反转
+            pre = cur;
+            cur = temp;
+        }
+        return pre;
+    }
 
     class ListNode {
         int val;
