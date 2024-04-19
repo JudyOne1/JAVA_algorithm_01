@@ -5,6 +5,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class leetcode206 {
+    public ListNode reverseList1(ListNode head) {
+        ListNode pre = null, cur = head;
+        // 遍历链表，直至当前节点cur为null
+        while (cur != null) {
+            ListNode nxt = cur.next; // 保存当前节点的下一个节点
+            cur.next = pre; // 将当前节点的next指向前一个节点，实现反转
+            pre = cur; // 更新前一个节点为当前节点
+            cur = nxt; // 更新当前节点为下一个节点
+        }
+        return pre; // 返回反转后的链表的头节点
+    }
     public static ListNode reverseList(ListNode head) {
         if (head == null){
             return null;
