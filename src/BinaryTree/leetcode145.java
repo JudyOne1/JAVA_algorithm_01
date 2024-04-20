@@ -45,6 +45,21 @@ public class leetcode145 {
         return result;
     }
 
+    public List<Integer> postorderTraversal1(TreeNode root) {
+        List<Integer> res = new ArrayList<>();
+        postorder(root, res);
+        return res;
+    }
+
+    void postorder(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        postorder(root.left, list);
+        postorder(root.right, list);
+        list.add(root.val);             // 注意这一句
+    }
+
 
     class TreeNode {
         int val;

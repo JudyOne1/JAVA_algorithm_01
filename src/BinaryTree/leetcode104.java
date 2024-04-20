@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Queue;
 
 public class leetcode104 {
+    public List<List<Integer>> resList = new ArrayList<List<Integer>>();
     public int maxDepth(TreeNode root) {
         //使用层序遍历查看有多少层即可
         if (root == null) {
             return 0;
         }
-        // 用于存储结果的列表
-        ArrayList<List<Integer>> resList = new ArrayList<List<Integer>>();
+        int deep = 0;
         // 使用队列进行层级遍历
         Queue<TreeNode> queue = new LinkedList<TreeNode>();
         queue.offer(root); // 将根节点入队列
@@ -35,11 +35,26 @@ public class leetcode104 {
                 len--; // 当前层节点数量减一
             }
 
-            // 将当前层的节点列表添加到结果列表中
-            resList.add(itemList);
+            deep++;
         }
-        return resList.size();
+        return deep;
     }
+    //DFS--递归方式
+    public void checkFun(TreeNode node, Integer deep) {
+        if (node == null) return;
+        deep++;
+
+        if (resList.size() < deep) {
+            //当层级增加时，list的Item也增加，利用list的索引值进行层级界定
+            List<Integer> item = new ArrayList<>();
+            resList.add(item);
+        }
+        resList.get(deep - 1).add(node.val);
+
+        checkFun(node.left, deep);
+        checkFun(node.right, deep);
+    }
+
     class TreeNode {
         int val;
         TreeNode left;

@@ -36,6 +36,21 @@ public class leetcode94 {
         }
         return result;
     }
+    public List<Integer> inorderTraversal1(TreeNode root) {
+        //递归实现
+        List<Integer> res = new ArrayList<>();
+        inorder(root, res);
+        return res;
+    }
+
+    void inorder(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return;
+        }
+        inorder(root.left, list);
+        list.add(root.val);             // 注意这一句
+        inorder(root.right, list);
+    }
 
 
 
