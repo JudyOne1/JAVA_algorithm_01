@@ -5,10 +5,26 @@ import java.util.List;
 import java.util.Stack;
 
 public class leetcode98 {
+    public boolean isValidBST1(TreeNode root) {
+        return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    private boolean dfs(TreeNode node, long left, long right) {
+        // 当前节点为空，可视为满足条件
+        if (node == null)
+            return true;
+        long x = node.val; // 当前节点的值
+
+        // 判断当前节点是否位于区间内，并递归判断左右子树
+        return left < x && x < right &&
+                dfs(node.left, left, x) && // 遍历左子树，左子树节点的值必须大于left且小于x
+                dfs(node.right, x, right); // 遍历右子树，右子树节点的值必须大于x且小于right
+    }
+
     public boolean isValidBST(TreeNode root) {
         // 使用中序遍历将二叉搜索树的节点值存入列表中，由于二叉搜索树的特性，列表中的元素会按顺序排列，只需要判断是否符合升序即可
         List<Integer> result = new ArrayList<Integer>();
-        if(root != null) {
+        if (root != null) {
             Stack<TreeNode> stack = new Stack<>();
             // 迭代方式实现中序遍历
             while (!stack.isEmpty() || root != null) {
@@ -29,12 +45,13 @@ public class leetcode98 {
         int AbsMinNum = Integer.MAX_VALUE;
         // 遍历数组，判断是否符合升序
         for (int i = 1; i < array.length; i++) {
-            if (array[i-1] >= array[i]){
+            if (array[i - 1] >= array[i]) {
                 return false;
             }
         }
         return true;
     }
+
     class TreeNode {
         int val;
         TreeNode left;

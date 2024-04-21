@@ -4,12 +4,39 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class leetcode101 {
-    /**
-     * 判断给定的二叉树是否是对称的。
-     *
-     * @param root 二叉树的根节点
-     * @return 如果二叉树是对称的，则返回true；否则返回false。
-     */
+
+
+    public boolean isSymmetric1(TreeNode root) {
+        // 空树或只有一个节点的树是对称树
+        if (root == null) {
+            return true;
+        }
+        if (root.left == null && root.right == null) {
+            return true;
+        }
+        // 使用递归判断树的左右子树是否对称
+        return dfs(root.left, root.right);
+    }
+
+    public boolean dfs(TreeNode left, TreeNode right) {
+        // 两棵树都为空，视为对称
+        if (left == null && right == null) {
+            return true;
+        }
+        // 仅有一棵树为空，视为不对称
+        if (left == null || right == null) {
+            return false;
+        }
+        // 两棵树节点值不相等，视为不对称
+        if (left.val != right.val) {
+            return false;
+        }
+
+        // 递归判断左右子树的对称性
+        return dfs(left.left, right.right) &&
+                dfs(left.right, right.left);
+    }
+
     public boolean isSymmetric(TreeNode root) {
         if (root == null) {
             return true; // 空树是对称树
@@ -37,7 +64,6 @@ public class leetcode101 {
         }
         return true; // 遍历完成后，说明树是对称的
     }
-
 
 
     class TreeNode {
