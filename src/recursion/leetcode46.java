@@ -11,12 +11,35 @@ import java.util.List;
  * 你可以 按任意顺序 返回答案。
  */
 public class leetcode46 {
-    /**
-     * 生成给定数组的所有排列组合。
-     *
-     * @param nums 输入的整数数组
-     * @return 所有可能的排列组合列表，每个排列组合都是一个整数列表
-     */
+    public List<List<Integer>> permute1(int[] nums) {
+        boolean[] visited = new boolean[nums.length];
+        ArrayList<List<Integer>> ans = new ArrayList<>();
+        LinkedList<Integer> path = new LinkedList<>();
+        dfs(nums,visited,ans,path);
+        return ans;
+    }
+
+    public void dfs(int[] nums,boolean[] visited,List<List<Integer>> result,LinkedList<Integer> path){
+        if (path.size() == nums.length){
+            result.add(new ArrayList<>(path));
+            return;
+        }
+
+        for (int i = 0; i < nums.length; i++) {
+            if (!visited[i]){
+                //没来过
+                path.add(nums[i]);
+                visited[i] = true;
+                dfs(nums,visited,result,path);
+                visited[i] = false;
+                path.removeLast();
+            }else {
+                continue;
+            }
+
+        }
+    }
+
     public List<List<Integer>> permute(int[] nums) {
         // 结果集合，存放所有排列组合
         List<List<Integer>> result = new ArrayList<>();
@@ -33,15 +56,6 @@ public class leetcode46 {
         return result;
     }
 
-    /**
-     * 递归生成数组的排列组合。
-     *
-     * @param result 存放所有排列组合的结果集合
-     * @param path 当前排列组合的路径
-     * @param nums 输入的整数数组
-     * @param index 当前处理的数字索引
-     * @param used 标记数组，记录数字是否已经被使用
-     */
     private void process(List<List<Integer>> result, LinkedList<Integer> path, int[] nums, int index, boolean[] used) {
         // 当前路径中的数字数量等于输入数组长度时，将此路径加入结果集合
         if (path.size() == nums.length) {

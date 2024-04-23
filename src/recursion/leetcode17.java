@@ -11,14 +11,32 @@ import java.util.List;
  * 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
  */
 public class leetcode17 {
-    /**
-     * 根据给定的数字字符串，获取对应的字母组合列表。
-     * 当数字字符串为空时，返回空列表。
-     * 数字字符串与字母的映射关系为常见电话号码按键上的字母。
-     *
-     * @param digits 给定的数字字符串，长度在0到7之间。
-     * @return 对应的字母组合列表。如果输入为空，则返回空列表。
-     */
+    public List<String> letterCombinations1(String digits) {
+        LinkedList<String> result = new LinkedList<String>();
+        // 如果输入字符串为空，直接返回空结果列表
+        if (digits.isEmpty()) {
+            return result;
+        }
+        // 数字到字母的映射数组
+        String[] numStrMap = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        String str = "";
+        dfs(digits,numStrMap,result,str,0);
+        return result;
+    }
+
+    private void dfs(String digits, String[] numStrMap, LinkedList<String> result, String str, int index) {
+        if (index == digits.length()){
+            result.add(str);
+            return;
+        }
+        String numberStr = numStrMap[digits.charAt(index) - '0'];
+        for (int i = 0; i < numberStr.length(); i++) {
+            str += numberStr.charAt(i);
+            dfs(digits,numStrMap,result,str,index+1);
+            str = str.substring(0,str.length()-1);
+        }
+    }
+
     public List<String> letterCombinations(String digits) {
         LinkedList<String> result = new LinkedList<String>();
         // 如果输入字符串为空，直接返回空结果列表
@@ -33,15 +51,7 @@ public class leetcode17 {
         return result;
     }
 
-    /**
-     * 递归处理函数，生成所有可能的字母组合。
-     *
-     * @param numStrMap 数字到字母的映射数组
-     * @param digits 给定的数字字符串
-     * @param index 当前处理的数字字符索引
-     * @param result 保存所有结果的列表
-     * @param str 当前构建的字母组合
-     */
+
     private void process(String[] numStrMap, String digits, int index, LinkedList<String> result, String str) {
         // 当构建的字母组合长度等于数字字符串长度时，加入结果列表
         if (str.length() == digits.length()) {
