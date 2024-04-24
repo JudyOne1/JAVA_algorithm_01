@@ -3,11 +3,33 @@ package recursion;
 import java.util.*;
 
 public class leetcode90 {
-    /**
-     * 生成包含重复元素的子集列表。
-     * @param nums 输入的整数数组，可能包含重复元素。
-     * @return 返回一个列表的列表，其中每个子列表都是输入数组的一个不重复的子集。
-     */
+    public List<List<Integer>> subsetsWithDup1(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        LinkedList<Integer> path = new LinkedList<>();
+        Arrays.sort(nums);
+        int index = 0;
+        dfs(result, path, nums, index);
+        return result;
+    }
+
+    private void dfs(List<List<Integer>> result, LinkedList<Integer> path, int[] nums, int index) {
+        // 将当前路径添加到结果列表中，表示找到一个有效的组合
+        result.add(new ArrayList<>(path));
+
+        // 遍历数组中剩余的元素
+        for (int i = index; i < nums.length; i++){
+            // 如果当前元素与前一个元素相同，则跳过，避免重复组合
+            if (i > index && nums[i] == nums[i - 1]){
+                continue;
+            }
+            // 将当前元素添加到路径中，继续搜索
+            path.addLast(nums[i]);
+            dfs(result, path, nums, i + 1);
+            // 回溯，将最后添加的元素从路径中移除
+            path.removeLast();
+        }
+    }
+
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         LinkedList<Integer> path = new LinkedList<>();
@@ -21,13 +43,7 @@ public class leetcode90 {
         return new ArrayList<>(set); // 返回去重后的结果
     }
 
-    /**
-     * 递归生成数组的所有子集（不包含重复元素）。
-     * @param result 存储所有生成的子集的列表
-     * @param path 当前生成的子集路径
-     * @param nums 输入的整数数组
-     * @param index 当前处理的元素索引
-     */
+
     private void process(List<List<Integer>> result, LinkedList<Integer> path, int[] nums, int index) {
         if (index == nums.length){
             // 当处理到数组末尾时，将当前路径加入结果集
