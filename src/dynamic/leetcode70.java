@@ -1,6 +1,44 @@
 package dynamic;
 
 public class leetcode70 {
+    public int climbStairs1(int n) {
+        if (n == 0){
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
+        if (n == 2) {
+            return 2;
+        }
+        return dfs(n);
+    }
+
+    private int dfs(int n) {
+        if (n == 0) {
+            return 0;
+        }
+        if (n == 1) {
+            return 1;
+        }
+        if (n == 2) {
+            return 2;
+        }
+        return dfs(n - 1) + dfs(n - 2);
+
+    }
+
+    private int dp1(int n){
+        int[] map = new int[n + 1];
+        map[0] = 0;
+        map[1] = 1;
+        map[2] = 2;
+        for (int i = 3; i < map.length; i++) {
+            map[i] = map[i - 1] + map[i - 2];
+        }
+        return map[n];
+    }
+
     public int climbStairs(int n) {
         return process(n);
     }
