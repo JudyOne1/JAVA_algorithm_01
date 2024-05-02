@@ -6,6 +6,7 @@ public class leetcode45 {
      * 两个覆盖范围的意义在于，在内区域，最多两步一定可以到（不用管具体怎么跳，反正一定可以跳到）
      */
     public int jump(int[] nums) {
+
         if (nums == null || nums.length == 0 || nums.length == 1) {
             return 0;
         }

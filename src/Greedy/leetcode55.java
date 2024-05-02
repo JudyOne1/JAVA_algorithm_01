@@ -6,18 +6,21 @@ public class leetcode55 {
 
     public boolean canJump(int[] nums) {
 
+        // 当数组长度为1时，无需跳跃即可到达末尾
         if (nums.length == 1) {
             return true;
         }
-        //覆盖范围, 初始覆盖范围应该是0，因为下面的迭代是从下标0开始的
+        // 覆盖范围, 初始覆盖范围应该是0，因为下面的迭代是从下标0开始的
         int coverRange = 0;
-        //在覆盖范围内更新最大的覆盖范围
+        // 在覆盖范围内更新最大的覆盖范围
         for (int i = 0; i <= coverRange; i++) {
             coverRange = Math.max(coverRange, i + nums[i]);
+            // 如果覆盖范围已经超过或等于数组长度减1，表示可以通过跳跃到达末尾
             if (coverRange >= nums.length - 1) {
                 return true;
             }
         }
+        // 如果覆盖范围达不到数组的末尾，则返回false
         return false;
 
 

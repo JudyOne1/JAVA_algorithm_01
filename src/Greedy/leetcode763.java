@@ -3,6 +3,56 @@ package Greedy;
 import java.util.*;
 
 public class leetcode763 {
+    public List<Integer> partitionLabels11(String S) {
+        List<Integer> list = new LinkedList<>(); // 用于存储每个连续字符组的长度
+        int[] edge = new int[26]; // 用于存储每个字母的右边界索引
+        char[] chars = S.toCharArray(); // 将字符串转换为字符数组以方便操作
+
+        // 初始化edge数组，记录每个字母的右边界
+        for (int i = 0; i < chars.length; i++) {
+            edge[chars[i] - 'a'] = i;
+        }
+
+        int idx = 0; // 当前字符组的右边界
+        int last = -1; // 上一个分割点的索引
+        // 遍历字符数组，确定每个字符组的右边界，并分割字符串
+        for (int i = 0; i < chars.length; i++) {
+            idx = Math.max(idx,edge[chars[i] - 'a']); // 更新当前字符组的右边界
+            if (i == idx) { // 当达到当前字符组的右边界时，记录并添加该字符组的长度
+                list.add(i - last);
+                last = i;
+            }
+        }
+        return list;
+    }
+    public List<Integer> partitionLabels1(String s) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (s == null || s.length() <= 0) {
+            return result;
+        }
+
+        // 初始化并填充lastIndex数组，记录每个字符最后一次出现的下标
+        int[] lastIndex = new int[26];
+        Arrays.fill(lastIndex, -1);
+        int length = s.length();
+        for (int i = 0; i < length; i++) {
+            lastIndex[s.charAt(i) - 'a'] = i;
+        }
+
+        // 根据lastIndex数组计算结果列表
+        int startIndex = 0;
+        int endIndex = 0;
+        // 遍历字符串，更新当前子串的最远边界，当i指针到达边界时，则说明当前子串结束
+        for (int i = 0; i < length; i++) {
+            endIndex = Math.max(endIndex, lastIndex[s.charAt(i) - 'a']);  // 更新当前子串的结束索引
+            if (i == endIndex) {  // 当当前索引等于子串的结束索引时，添加子串长度到结果列表，并准备下一个子串的开始
+                result.add(endIndex - startIndex + 1);
+                startIndex = endIndex + 1;
+            }
+        }
+
+        return result;
+    }
     /**
      * 对字符串进行分割，返回每个分割区间的长度。
      *
