@@ -3,6 +3,7 @@ package dynamic;
 import java.util.Arrays;
 
 public class leetcode1143 {
+
     public int longestCommonSubsequence(String text1, String text2) {
         char[] s;
         char[] t;
@@ -17,20 +18,6 @@ public class leetcode1143 {
 
 //        return dp(text1, text2);
     }
-
-    private int dfs(int i, int j, char[] s, char[] t, int[][] cache) {
-        if (i < 0 || j < 0) {
-            return 0;
-        }
-        if (cache[i][j] != -1) {
-            return cache[i][j];
-        }
-        if (s[i] == t[j]) {
-            return cache[i][j] = dfs(i - 1, j - 1, s, t, cache) + 1;
-        }
-        return cache[i][j] = Math.max(dfs(i - 1, j, s, t, cache), dfs(i, j - 1, s, t, cache));
-    }
-
     public int dp1(String text1, String text2) {
         char[] s = text1.toCharArray(), t = text2.toCharArray();
         int n = s.length, m = t.length;
@@ -46,6 +33,37 @@ public class leetcode1143 {
         }
         return f[n][m];
     }
+    public int dpM(String text1, String text2){
+        char[] s = text1.toCharArray();
+        char[] t = text2.toCharArray();
+        int n = s.length, m = t.length;
+        int[][] f = new int[n + 1][m + 1];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (s[i] == t[j]){
+                    f[i + 1][j + 1] = f[i][j] + 1;
+                }else {
+                    f[i + 1][j + 1] = Math.max(f[i][j + 1], f[i + 1][j]);
+                }
+            }
+        }
+        return f[n][m];
+    }
+
+    private int dfs(int i, int j, char[] s, char[] t, int[][] cache) {
+        if (i < 0 || j < 0) {
+            return 0;
+        }
+        if (cache[i][j] != -1) {
+            return cache[i][j];
+        }
+        if (s[i] == t[j]) {
+            return cache[i][j] = dfs(i - 1, j - 1, s, t, cache) + 1;
+        }
+        return cache[i][j] = Math.max(dfs(i - 1, j, s, t, cache), dfs(i, j - 1, s, t, cache));
+    }
+
+
 
     public int dp(String text1, String text2) {
         char[] charArray1 = text1.toCharArray();
