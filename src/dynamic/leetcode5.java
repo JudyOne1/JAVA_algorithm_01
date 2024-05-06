@@ -1,6 +1,23 @@
 package dynamic;
 
 public class leetcode5 {
+    public String longestPalindrome1(String s) {
+        int len = s.length();
+        String result = "";
+        for (int i = 0; i < 2 * len - 1; i++) {
+            int left = i / 2;
+            int right = i / 2 + i % 2;
+            while (left >= 0 && right < len && s.charAt(left) == s.charAt(right)) {
+                String tmp = s.substring(left, right + 1);
+                if (tmp.length() > result.length()) {
+                    result = tmp;
+                }
+                left--;
+                right++;
+            }
+        }
+        return result;
+    }
     public String longestPalindrome0(String s) {
         // 初始化最长回文子串为空字符串
         int len = s.length();

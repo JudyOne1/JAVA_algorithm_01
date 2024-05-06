@@ -5,6 +5,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class leetcode3 {
+    public int lengthOfLongestSubstring1(String s) {
+        char[] charArray = s.toCharArray();
+        int length = s.length();
+        int result = 0;
+        int left = 0;
+        boolean[] has = new boolean[128];
+        for (int right = 0; right < length; right++) {
+            char rightChar = charArray[right];
+            while (has[rightChar]) {
+                char leftChar = charArray[left];
+                has[leftChar] = false;
+                left++;
+            }
+            has[rightChar] = true;
+            result = Math.max(result, right - left + 1);
+        }
+        return result;
+    }
 
     public int lengthOfLongestSubstring(String s) {
         char[] chars = s.toCharArray(); // 将字符串转换为字符数组，以提高访问速度

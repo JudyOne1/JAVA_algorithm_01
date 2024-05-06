@@ -5,6 +5,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class leetcode206 {
+    public ListNode reverseList2(ListNode head) {
+        ListNode pre = null, cur = head;
+        while (cur != null) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return pre;
+    }
+
     public ListNode reverseList1(ListNode head) {
         ListNode pre = null, cur = head;
         // 遍历链表，直至当前节点cur为null
@@ -16,15 +27,16 @@ public class leetcode206 {
         }
         return pre; // 返回反转后的链表的头节点
     }
+
     public static ListNode reverseList(ListNode head) {
-        if (head == null){
+        if (head == null) {
             return null;
         }
         ListNode helper = head;
         //先存起来，倒序输出
         ArrayList<ListNode> list = new ArrayList<>();
         //保存到list中
-        while (helper != null){
+        while (helper != null) {
             list.add(helper);
             helper = helper.next;
         }
@@ -33,7 +45,7 @@ public class leetcode206 {
         helper = new ListNode();
         ListNode helperHead = helper;
         for (int i = 0; i < list.size(); i++) {
-            if (i == list.size()-1){
+            if (i == list.size() - 1) {
                 //到最后一个了
                 helper.next = list.get(i);
                 helper.next.next = null;
@@ -54,11 +66,21 @@ public class leetcode206 {
         System.out.println(reverseList(head));
 
     }
-     static class ListNode {
+
+    static class ListNode {
         int val;
         ListNode next;
-        ListNode() {}
-        ListNode(int val) { this.val = val; }
-        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
     }
 }
