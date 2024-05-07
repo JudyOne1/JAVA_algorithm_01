@@ -1,6 +1,25 @@
 package ListNode;
 
 public class leetcode92 {
+    public ListNode reverseBetween1(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode(0, head), p0 = dummy;
+        //找到第一个
+        for (int i = 0; i < left - 1; i++) {
+            p0 = p0.next;
+        }
+        ListNode pre = null, cur = p0.next;
+        //反转left到right
+        for (int i = 0; i < right - left + 1; i++) {
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        p0.next.next = cur;
+        p0.next = pre;
+        return dummy.next;
+    }
+
     public ListNode reverseBetween(ListNode head, int left, int right) {
         // 使用虚拟节点dummy建立头节点的前驱，方便处理头节点变化的情况
         ListNode dummy = new ListNode(0, head), p0 = dummy;
@@ -22,11 +41,21 @@ public class leetcode92 {
         p0.next = pre;//链接前面的链表
         return dummy.next;
     }
+
     class ListNode {
         int val;
         ListNode next;
-        ListNode() {}
-        ListNode(int val) { this.val = val; }
-        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
     }
 }

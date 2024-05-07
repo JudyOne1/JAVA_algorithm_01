@@ -5,6 +5,20 @@ import com.sun.xml.internal.bind.v2.model.core.ID;
 import java.util.Arrays;
 
 public class leetcode53 {
+    public int maxSubArray1(int[] nums) {
+        int res = Integer.MIN_VALUE;
+        int cur = 0;
+        for (int i = 0; i < nums.length; i++) {
+            cur += nums[i];
+            res = Math.max(res, cur);
+            if (cur <= 0){
+                cur = 0;
+            }
+        }
+
+        return res;
+
+    }
     public int maxSubArray(int[] nums) {
         if (nums.length == 1){
             return nums[0];
