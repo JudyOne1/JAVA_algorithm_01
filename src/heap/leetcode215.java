@@ -4,6 +4,17 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class leetcode215 {
+    public int findKthLargest1(int[] nums, int k) {
+        //先保存K个值，不断弹出最小值即可
+        PriorityQueue<Integer> queue = new PriorityQueue<>();
+        for (int num : nums) {
+            queue.offer(num);
+            if (queue.size() > k){
+                queue.poll();
+            }
+        }
+        return queue.peek();
+    }
     public int findKthLargest(int[] nums, int k) {
         Queue<Integer> pq = new PriorityQueue<>();   // 将数组加入小顶堆，堆中维护当前值最大的k个数
         for(int num: nums){

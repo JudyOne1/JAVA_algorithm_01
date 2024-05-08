@@ -3,6 +3,22 @@ package dynamic;
 import java.util.Arrays;
 
 public class leetcode300 {
+    public int lengthOfLIS2(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        int ans = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            ans = Math.max(ans, dp[i] + 1);
+        }
+        return ans;
+    }
+
+
     public int lengthOfLIS1(int[] nums) {
         int n = nums.length;
         int ans = 0;
@@ -22,7 +38,7 @@ public class leetcode300 {
             for (int j = 0; j < i; j++) {
                 // 比较当前元素与之前元素，若当前元素大，则更新dp[i]
                 if (nums[j] < nums[i]) {
-                    dp[i] = Math.max(dp[i], dp[j]+1);
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
                 }
             }
             // 更新最大连续元素个数
@@ -44,7 +60,7 @@ public class leetcode300 {
             }
         }
 
-        return max+1; // 返回最大长度加上当前元素，即当前索引处的最大连续递增子序列长度
+        return max + 1; // 返回最大长度加上当前元素，即当前索引处的最大连续递增子序列长度
     }
 
     public int lengthOfLIS(int[] nums) {

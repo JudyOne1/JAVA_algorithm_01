@@ -5,6 +5,7 @@ public class leetcode543 {
         dfs(root);
         return ans;
     }
+
     private int ans;
 
     public int dfs(TreeNode root) {

@@ -6,11 +6,30 @@ import java.util.*;
  * 层序遍历二叉树
  */
 public class leetcode102 {
-    /**
-     * 以层级遍历的方式返回二叉树的节点值列表列表。
-     * @param root 二叉树的根节点。如果根节点为null，则返回空列表。
-     * @return 一个列表的列表，其中每个子列表表示二叉树的一层节点值。如果二叉树为空，则返回空列表。
-     */
+    public List<List<Integer>> levelOrder1(TreeNode root) {
+        List<List<Integer>> ans = new ArrayList<List<Integer>>();
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        if (root == null) return ans;
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+
+            List<Integer> list = new ArrayList<>();
+            int len = queue.size();
+
+            while (len > 0) {
+                TreeNode poll = queue.poll();
+                list.add(poll.val);
+                len--;
+                if (poll.left != null) queue.add(poll.left);
+                if (poll.right != null) queue.add(poll.right);
+
+            }
+            ans.add(list);
+        }
+        return ans;
+    }
+
     public List<List<Integer>> levelOrder(TreeNode root) {
         // 用于存储结果的列表
         ArrayList<List<Integer>> resList = new ArrayList<List<Integer>>();
@@ -46,7 +65,9 @@ public class leetcode102 {
         return resList;
 
     }
+
     public List<List<Integer>> resList = new ArrayList<List<Integer>>();
+
     //DFS--递归方式
     public void checkFun01(TreeNode node, Integer deep) {
         if (node == null) return; // 如果当前节点为空，则返回

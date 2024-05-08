@@ -3,6 +3,18 @@ package hashTable;
 import java.util.HashMap;
 
 public class leetcode1 {
+    public int[] twoSum1(int[] nums, int target) {
+        //使用哈希表
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            if (map.containsKey(target - nums[i])){
+                return new int[]{map.get(target - nums[i]), i};
+            } else {
+                map.put(nums[i], i);
+            }
+        }
+        return null;
+    }
     public int[] twoSum(int[] nums, int target) {
         HashMap<Integer, Integer> hashMap = new HashMap<>();
         //key 存数字，value 存下标；
