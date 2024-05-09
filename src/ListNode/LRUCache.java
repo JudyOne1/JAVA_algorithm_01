@@ -3,7 +3,12 @@ package ListNode;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ */
 class LRUCache {
+    //Node,capacity,dummy,map
+    //get,put,remove,getNode,pushFront
     private class Node {
         int key, value;
         Node prev, next;
