@@ -11,6 +11,33 @@ import java.util.List;
  * 你可以 按任意顺序 返回答案。
  */
 public class leetcode46 {
+    public List<List<Integer>> permute2(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length == 0) return result;
+        List<Integer> path = new ArrayList<>();
+        boolean[] arrived = new boolean[nums.length];
+        int index = 0;
+        dfs1(nums,result,path,arrived);
+        return result;
+    }
+
+    private void dfs1(int[] nums, List<List<Integer>> result, List<Integer> path, boolean[] arrived) {
+        if (path.size() == nums.length){
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (arrived[i]){
+                continue;
+            }
+            path.add(nums[i]);
+            arrived[i] = true;
+            dfs1(nums,result,path,arrived);
+            path.remove(path.size()-1);
+            arrived[i] = false;
+        }
+    }
+
     public List<List<Integer>> permute1(int[] nums) {
         boolean[] visited = new boolean[nums.length];
         ArrayList<List<Integer>> ans = new ArrayList<>();

@@ -1,6 +1,15 @@
 package dynamic;
 
 public class leetcode121 {
+    public int maxProfit1(int[] prices) {
+        // 花费和利润
+        int cost = Integer.MAX_VALUE, profit = 0;
+        for (int price : prices) {
+            cost = Math.min(cost, price);
+            profit =Math.max(profit, price - cost);
+        }
+        return profit;
+    }
     public int maxProfit(int[] prices) {
         // 初始化买入成本为最大整数，利润为0
         int cost = Integer.MAX_VALUE, profit = 0;

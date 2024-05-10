@@ -24,6 +24,7 @@ public class leetcode42 {
         return ans;
 
     }
+
     public int trap2(int[] height) {
         // 初始化答案、左右指针、前缀最大值和后缀最大值
         int ans = 0, left = 0, right = height.length - 1, preMax = 0, sufMax = 0;
@@ -33,7 +34,13 @@ public class leetcode42 {
             preMax = Math.max(preMax, height[left]);
             sufMax = Math.max(sufMax, height[right]);
             // 根据前缀最大值和后缀最大值的大小决定移动哪个指针，并累加答案
-            ans += preMax < sufMax ? preMax - height[left++] : sufMax - height[right--];
+            if (preMax < sufMax) {
+                ans += preMax - height[left];
+                left++;
+            } else {
+                ans += sufMax - height[right];
+                right--;
+            }
         }
         return ans;
     }

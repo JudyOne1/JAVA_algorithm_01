@@ -4,6 +4,24 @@ import java.util.Arrays;
 import java.util.Collections;
 
 public class leetcode322 {
+    public int coinChange2(int[] coins, int amount) {
+        int n = coins.length;
+        int[][] f = new int[n + 1][amount + 1];
+        Arrays.fill(f[0], Integer.MAX_VALUE / 2); // 除 2 是防止下面 + 1 溢出
+        f[0][0] = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int c = 0; c <= amount; ++c) {
+                if (c < coins[i]) {
+                    f[i + 1][c] = f[i][c];
+                } else {
+                    f[i + 1][c] = Math.min(f[i][c], f[i + 1][c - coins[i]] + 1);
+                }
+            }
+        }
+        int ans = f[n][amount];
+        return ans < Integer.MAX_VALUE / 2 ? ans : -1;
+    }
+
     public int coinChange1(int[] coins, int amount) {
         int ans = dfs(coins, amount, 0);
         return ans == Integer.MAX_VALUE / 2 ? -1 : ans;
