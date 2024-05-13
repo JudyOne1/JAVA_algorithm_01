@@ -3,6 +3,9 @@ package stackAndList;
 import java.util.LinkedList;
 
 public class leetcode239 {
+    public int[] maxSlidingWindow1(int[] nums, int k) {
+
+    }
 
     public int[] maxSlidingWindow(int[] nums, int k) {
         // 验证输入的合法性

@@ -25,6 +25,7 @@ public class leetcode72 {
         }
         return dp[n][m];
     }
+
     public int dp1(String text1, String text2) {
         char[] s = text1.toCharArray(), t = text2.toCharArray();
         int n = s.length, m = t.length;
