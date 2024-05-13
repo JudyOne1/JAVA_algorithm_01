@@ -1,8 +1,31 @@
 package ListNode;
 
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
 import java.util.*;
 
 public class leetcode148 {
+    public ListNode sortList1(ListNode head) {
+        if (head == null || head.next == null) return head;
+        HashMap<Integer, ListNode> map = new HashMap<>();
+        ArrayList<Integer> list = new ArrayList<>();
+        ListNode cur = head;
+        while (cur != null){
+            map.put(cur.val, cur);
+            list.add(cur.val);
+            cur = cur.next;
+        }
+        Collections.sort(list);
+        for (int i = 0; i < list.size(); i++) {
+            if (i == list.size()-1){
+                map.get(list.get(i)).next = null;
+                break;
+            }
+            map.get(list.get(i)).next = map.get(list.get(i+1));
+
+        }
+        return map.get(list.get(0));
+    }
     public ListNode sortList(ListNode head) {
         // 使用哈希表将链表中的节点按值分组，同一值的节点组成一个子链表
         Map<Integer, List<ListNode>> groupMap = new HashMap<>();
