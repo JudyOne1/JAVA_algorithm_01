@@ -4,7 +4,26 @@ import java.util.LinkedList;
 
 public class leetcode239 {
     public int[] maxSlidingWindow1(int[] nums, int k) {
+        if (nums == null || k < 1 || nums.length < k) {
+            return null;
+        }
+        LinkedList<Integer> qmax = new LinkedList<Integer>();
+        int[] res = new int[nums.length - k + 1];
+        int index = 0;
+        for (int R = 0; R < nums.length; R++){
+            while (!qmax.isEmpty() && nums[qmax.peekLast()] <= nums[R]) {
+                qmax.pollLast();
+            }
+            qmax.addLast(R);
+            if (qmax.peekFirst() == R - k) {
+                qmax.pollFirst();
+            }
 
+            if (R >= k - 1) {
+                res[index++] = nums[qmax.peekFirst()];
+            }
+        }
+        return res;
     }
 
     public int[] maxSlidingWindow(int[] nums, int k) {
