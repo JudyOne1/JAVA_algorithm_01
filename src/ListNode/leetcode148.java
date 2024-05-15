@@ -6,26 +6,30 @@ import java.util.*;
 
 public class leetcode148 {
     public ListNode sortList1(ListNode head) {
-        if (head == null || head.next == null) return head;
-        HashMap<Integer, ListNode> map = new HashMap<>();
-        ArrayList<Integer> list = new ArrayList<>();
+        if (head == null || head.next == null) {
+            return head;
+        }
+        HashMap<Integer, List<ListNode>> map = new HashMap<>();
         ListNode cur = head;
-        while (cur != null){
-            map.put(cur.val, cur);
-            list.add(cur.val);
+        while (cur != null) {
+            map.putIfAbsent(cur.val, new ArrayList<>());
+            map.get(cur.val).add(cur);
             cur = cur.next;
         }
+        ArrayList<Integer> list = new ArrayList<>(map.keySet());
         Collections.sort(list);
-        for (int i = 0; i < list.size(); i++) {
-            if (i == list.size()-1){
-                map.get(list.get(i)).next = null;
-                break;
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
+        for (int value : list) {
+            for (ListNode node : map.get(value)) {
+                tail.next = node;
+                tail = tail.next;
             }
-            map.get(list.get(i)).next = map.get(list.get(i+1));
-
         }
-        return map.get(list.get(0));
+        tail.next = null;
+        return dummy.next;
     }
+
     public ListNode sortList(ListNode head) {
         // 使用哈希表将链表中的节点按值分组，同一值的节点组成一个子链表
         Map<Integer, List<ListNode>> groupMap = new HashMap<>();
@@ -63,11 +67,21 @@ public class leetcode148 {
         // 返回新链表的第二个节点，即排好序的链表的头节点
         return dummy.next.next;
     }
+
     class ListNode {
         int val;
         ListNode next;
-        ListNode() {}
-        ListNode(int val) { this.val = val; }
-        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+
+        ListNode() {
+        }
+
+        ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
     }
 }

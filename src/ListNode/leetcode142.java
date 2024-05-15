@@ -3,6 +3,26 @@ package ListNode;
 import java.util.LinkedHashMap;
 
 public class leetcode142 {
+    public ListNode detectCycle2(ListNode head) {
+        ListNode fast = head, slow = head;
+        while (true) {
+            if (fast == null || fast.next == null) {
+                return null;
+            }
+            fast = fast.next.next;
+            slow = slow.next;
+            if (fast == slow) {
+                break;
+            }
+        }
+        fast = head;
+        while (slow != fast) {
+            slow = slow.next;
+            fast = fast.next;
+        }
+        return fast;
+    }
+
     public ListNode detectCycle(ListNode head) {
         //将节点到地址记下来，遍历head对比地址是否相同，相同则代表出现环
         //key为节点地址，value为从0自增到数字
