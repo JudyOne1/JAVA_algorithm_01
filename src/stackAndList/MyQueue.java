@@ -7,15 +7,15 @@ import java.util.Stack;
  * 思路：
  * push栈 和 pop栈
  * (1. 一次性倒完push栈数据；2. pop没拿完不能倒数据【pop空了才能倒数据】)
- *                                               👆反正是队列所以不碍事
- *  >> 5 4 3 2 1 ||  push
- *  >> null ||  pop
- *
- *  >> null || push
- *  >> 1 2 3 4 5 ||  pop 弹出的顺序正是 出队列 的顺序
- *
- *
- *
+ * 👆反正是队列所以不碍事
+ * >> 5 4 3 2 1 ||  push
+ * >> null ||  pop
+ * <p>
+ * >> null || push
+ * >> 1 2 3 4 5 ||  pop 弹出的顺序正是 出队列 的顺序
+ * <p>
+ * <p>
+ * <p>
  * 2）如何用队列结构实现栈结构
  * 思路：
  * 两个队列，存入数据12345到队列A >54321>，需要取5，那么把1234存入到队列B >4321>，留下5再取出5.
@@ -37,7 +37,7 @@ class MyQueue {
     public int pop() {
         if (!stackPop.isEmpty()) {
             return stackPop.pop();
-        }else {
+        } else {
             //需要将 push栈的数据倒到pop栈
             while (!stackPush.isEmpty()) {
                 stackPop.push(stackPush.pop());
@@ -49,7 +49,7 @@ class MyQueue {
     public int peek() {
         if (!stackPop.isEmpty()) {
             return stackPop.peek();
-        }else {
+        } else {
             //需要将 push栈的数据倒到pop栈
             while (!stackPush.isEmpty()) {
                 stackPop.push(stackPush.pop());
@@ -59,7 +59,7 @@ class MyQueue {
     }
 
     public boolean empty() {
-        return stackPop.isEmpty()&&stackPush.isEmpty();
+        return stackPop.isEmpty() && stackPush.isEmpty();
     }
 }
 

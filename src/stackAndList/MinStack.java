@@ -6,6 +6,7 @@ import java.util.Stack;
  * 还能立即获取栈中的最小元素。
  */
 class MinStack {
+
     private Stack<Integer> stack; // 正常的栈，用于存储所有压入的元素
     private Stack<Integer> min_stack; // 用于存储当前栈中的最小元素
 
