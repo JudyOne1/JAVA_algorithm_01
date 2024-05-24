@@ -5,6 +5,22 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class leetcode138 {
+    public Node copyRandomList1(Node head) {
+        Node cur = head;
+        HashMap<Node,Node> map = new HashMap<>();
+        while (cur!=null){
+            map.put(cur,new Node(cur.val));
+            cur = cur.next;
+        }
+        cur = head;
+        while (cur!=null){
+            map.get(cur).next = map.get(cur.next);
+            map.get(cur).random = map.get(cur.random);
+
+            cur = cur.next;
+        }
+        return map.get(head);
+    }
     public Node copyRandomList(Node head) {
         if(head == null) return null;
         Node cur = head;

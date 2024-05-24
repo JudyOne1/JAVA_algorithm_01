@@ -1,7 +1,6 @@
 package stackAndList;
 
-import java.util.ArrayList;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串 s ，判断字符串是否有效。
@@ -13,6 +12,28 @@ import java.util.Stack;
  * 每个右括号都有一个对应的相同类型的左括号。
  */
 public class leetcode20 {
+    public boolean isValid3(String s) {
+        Map<Character, Character> map = new HashMap<Character, Character>() {{
+            put('{', '}');
+            put('[', ']');
+            put('(', ')');
+            put('?', '?');
+        }};
+        if (s.length() > 0 && !map.containsKey(s.charAt(0))) return false;
+        LinkedList<Character> stack = new LinkedList<Character>() {{
+            add('?');
+        }};
+        for (Character c : s.toCharArray()) {
+            if (map.containsKey(c)) {
+                stack.addLast(c);
+            }
+            else if (map.get(stack.removeLast()) != c) {
+                return false;
+            }
+        }
+        return stack.size() == 1;
+    }
+
     public boolean isValid2(String s) {
         char[] chars = s.toCharArray();
         Stack<Character> stack = new Stack<>();
