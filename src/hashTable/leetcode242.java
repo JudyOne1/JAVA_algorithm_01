@@ -1,6 +1,15 @@
 package hashTable;
 
+import java.util.Arrays;
+
 public class leetcode242 {
+    public boolean isAnagram1(String s, String t) {
+        char[] sCharArray = s.toCharArray();
+        char[] tCharArray = t.toCharArray();
+        Arrays.sort(sCharArray);
+        Arrays.sort(tCharArray);
+        return Arrays.equals(sCharArray, tCharArray);
+    }
     public boolean isAnagram(String s, String t) {
         int[] record = new int[26];
 
