@@ -4,6 +4,43 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 public class leetcode394 {
+    public String decodeString1(String s) {
+        StringBuilder sb = new StringBuilder();
+        while (s.contains("[")) {
+            //第一对括号的起始位置和结束位置
+            int startEqual = 0, endEqual = 0;
+            for (int i = 0; i < s.length(); i++) {
+                if (s.charAt(i) == '[') startEqual = i;
+                if (s.charAt(i) == ']') {
+                    endEqual = i;
+                    break;
+                }
+            }
+
+            //括号中的字符串sub
+            String sub = s.substring(startEqual + 1, endEqual);
+
+            //向后扫描，找到数字开始的位置;
+            int numIndex = startEqual - 1;
+            while (numIndex >= 0 && Character.isDigit(s.charAt(numIndex))) numIndex--;
+
+            //需要重复的次数
+            int times = Integer.parseInt(s.substring(numIndex + 1, startEqual));
+
+            //将"["括号数字之前的字符添加到sb中
+            sb.append(s, 0, numIndex + 1);
+            while (times-- > 0)
+                sb.append(sub);
+            //将"]"右括号之后的字符添加到sb中
+            sb.append(s, endEqual + 1, s.length());
+
+            s = sb.toString();
+            sb = new StringBuilder();
+        }
+        return s;
+    }
+
+
     public String decodeString(String s) {
         StringBuilder res = new StringBuilder(); // 用于构建解码后的字符串
         int multi = 0; // 用于存储当前字符前的数字，代表重复次数
