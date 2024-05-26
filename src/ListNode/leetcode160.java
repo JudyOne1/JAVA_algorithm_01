@@ -11,28 +11,6 @@ public class leetcode160 {
         }
         return A;
 
-//        HashMap<Integer, ListNode> hashMap = new HashMap<>();
-//        while (true){
-//            hashMap.put(headA.val, headA);
-//            if (headA.next == null){
-//                break;
-//            }
-//            headA = headA.next;
-//        }
-//        while (true){
-//            if (hashMap.containsKey(headB.val)){
-//                ListNode same = hashMap.get(headB.val);
-//                if (same == headB){
-//                    return same;
-//                }
-//            }
-//            if (headB.next == null){
-//                break;
-//            }
-//            headB = headB.next;
-//        }
-//        return null;
-
     }
 
 

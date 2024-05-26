@@ -2,6 +2,7 @@ package ListNode;
 
 import java.util.LinkedHashMap;
 
+
 public class leetcode142 {
     public ListNode detectCycle2(ListNode head) {
         ListNode fast = head, slow = head;
