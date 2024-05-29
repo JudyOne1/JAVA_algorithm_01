@@ -6,6 +6,20 @@ import java.util.*;
  * 合并所有重叠的区间，并返回 一个不重叠的区间数组，该数组需恰好覆盖输入中的所有区间 。
  */
 public class leetcode56 {
+    public int[][] merge2(int[][] intervals) {
+        Arrays.sort(intervals, (v1, v2) -> v1[0] - v2[0]);
+        int[][] res = new int[intervals.length][2];
+        int idx = -1;
+        for (int[] interval: intervals) {
+            if (idx == -1 || interval[0] > res[idx][1]) {
+                res[++idx] = interval;
+            } else {
+                res[idx][1] = Math.max(res[idx][1], interval[1]);
+            }
+        }
+        return Arrays.copyOf(res, idx + 1);
+    }
+
     public int[][] merge1(int[][] intervals) {
 
         LinkedList<int[]> res = new LinkedList<>();

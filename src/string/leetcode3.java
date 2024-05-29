@@ -5,27 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class leetcode3 {
-    public int lengthOfLongestSubstring2(String s) {
-        char[] chars = s.toCharArray();
-        boolean[] has = new boolean[128];
-        Arrays.fill(has, false);
-        int left = 0;
-        int result = 0;
-        for (int right = 0; right < s.length(); right++) {
-            char rightChar = chars[right];
-            if (has[rightChar]) {
-                while (has[rightChar]) {
-                    char leftChar = chars[left];
-                    has[leftChar] = false;
-                    left++;
-                }
-            }
-            has[rightChar] = true;
-            result = Math.max(result, right - left + 1);
-        }
-        return result;
-    }
-
     public int lengthOfLongestSubstring1(String s) {
         char[] charArray = s.toCharArray();
         int length = s.length();
