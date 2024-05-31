@@ -7,6 +7,14 @@ public class leetcode236 {
         }
         TreeNode left = lowestCommonAncestor(root.left, p, q);
         TreeNode right = lowestCommonAncestor(root.right, p, q);
+        /**
+         * 如果 left 和 right 都不为空，说明 p 和 q 被分隔在当前根节点的两侧（一个在左子树，一个在右子树），
+         * 因此当前根节点就是它们的最低公共祖先。
+         *
+         * 如果 left 为空但 right 不为空，或者 right 为空但 left 不为空，
+         * 说明 p 和 q 都位于当前根节点的同一侧（全部在左子树或全部在右子树），
+         * 则返回非空的那一侧的结果。
+         */
         if (left != null && right != null) {
             return root;
         }
