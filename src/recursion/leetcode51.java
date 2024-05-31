@@ -48,4 +48,48 @@ public class leetcode51 {
         }
     }
 
+    class Nqueens {
+        List<List<String>> ans = new ArrayList<>(); // 存储所有合法的解决方案
+        int[] col; // 记录每一行皇后所在的列
+        int n; // 棋盘的大小
+
+        public List<List<String>> solveNQueens(int n) {
+            col = new int[n];
+            this.n = n;
+            dfs(0); // 从第一行开始搜索
+            return ans;
+        }
+
+        private void dfs(int r) {
+            if (r == n) { // 找到一个解决方案
+                List<String> tmp = new ArrayList<>();
+                for (int i : col) {
+                    char[] row = new char[n];
+                    Arrays.fill(row, '.'); // 初始化为空棋盘
+                    row[i] = 'Q'; // 放置皇后
+                    tmp.add(new String(row));
+                }
+                ans.add(tmp); // 添加到结果集中
+                return;
+            }
+
+            for (int c = 0; c < col.length; c++) { // 尝试在当前行的每一列放置皇后
+                if (valid(r, c)) { // 如果合法，则递归搜索下一行
+                    col[r] = c;
+                    dfs(r + 1);
+                }
+            }
+        }
+
+        private boolean valid(int r, int c) {
+            for (int R = 0; R < r; R++) { // 检查上方和斜上方是否有皇后
+                int C = col[R];
+                if ((c == C) || ((R + C) == (r + c)) || ((R - C) == (r - c))) // 如果有冲突，返回 false
+                    return false;
+            }
+            return true; // 无冲突，位置合法
+        }
+
+    }
+
 }
