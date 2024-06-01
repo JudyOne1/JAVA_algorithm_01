@@ -4,6 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class leetcode22 {
+
+    private int n;
+    private char[] path;
+    private final List<String> ans = new ArrayList<>();
+
+    public List<String> generateParenthesis1(int n) {
+        this.n = n;
+        path = new char[n * 2];
+        dfs1(0, 0);
+        return ans;
+    }
+
+    private void dfs1(int i, int open) {
+        if (i == n * 2) {
+            ans.add(new String(path));
+            return;
+        }
+        if (open < n) { // 可以填左括号
+            path[i] = '(';
+            dfs1(i + 1, open + 1);
+        }
+        if (i - open < open) { // 可以填右括号
+            path[i] = ')';
+            dfs1(i + 1, open);
+        }
+    }
+
+
     public List<String> generateParenthesis(int n) {
         ArrayList<String> ans = new ArrayList<>();
         String str = "";

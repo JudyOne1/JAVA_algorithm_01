@@ -8,6 +8,36 @@ import java.util.*;
  * candidates 中的 同一个 数字可以 无限制重复被选取 。如果至少一个数字的被选数量不同，则两种组合是不同的。
  */
 public class leetcode39 {
+    ArrayList<List<Integer>> result = new ArrayList<>();
+    LinkedList<Integer> path = new LinkedList<>();
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        int index = 0;
+        dfs1(candidates, target, index);
+        return result;
+    }
+
+    private void dfs1(int[] candidates, int target, int index) {
+        if (target == 0){
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        if (index == candidates.length){
+            return;
+        }
+        for (int i = index; i < candidates.length; i++) {
+            if (target - candidates[i] >= 0){
+                path.add(candidates[i]);
+                dfs1(candidates, target - candidates[i], i);
+                path.removeLast();
+            }else {
+                break;
+            }
+        }
+
+    }
+
+
     public List<List<Integer>> combinationSum1(int[] candidates, int target) {
         ArrayList<List<Integer>> result = new ArrayList<>();
         LinkedList<Integer> path = new LinkedList<>();
