@@ -9,6 +9,8 @@ import java.util.Map;
 class LRUCache {
     //Node,capacity,dummy,map
     //get,put,remove,getNode,pushFront
+    //put->getNode->pushFront->remove(map & node)
+    //getNode->remove(node)->pushFront
     private class Node {
         int key, value;
         Node prev, next;

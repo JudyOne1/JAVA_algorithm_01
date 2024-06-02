@@ -1,6 +1,29 @@
 package ListNode;
 
 public class leetcode92 {
+    public ListNode reverseBetween2(ListNode head, int left, int right) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode cur = dummy;
+        for (int i = 0; i < left- 1; i++) {
+            cur = cur.next;
+        }
+        ListNode leftPrev = cur;
+        ListNode rightNext = cur.next;
+        ListNode prev = null;
+        cur = cur.next;
+        for (int i = 0; i < right - left + 1; i++) {
+            ListNode next = cur.next;
+            cur.next = prev;
+            prev = cur;
+            cur = next;
+        }
+        leftPrev.next = prev;
+        rightNext.next = cur;
+        return dummy.next;
+    }
+
+
+
     public ListNode reverseBetween1(ListNode head, int left, int right) {
         ListNode dummy = new ListNode(0, head), p0 = dummy;
         //找到第一个

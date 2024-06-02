@@ -5,6 +5,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class leetcode3 {
+    public int lengthOfLongestSubstring2(String s) {
+
+        boolean[] helper = new boolean[128];
+        int max = 0;
+        int start = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            while (helper[c]) {
+                helper[s.charAt(start)] = false;
+                start++;
+
+            }
+            helper[c] = true;
+            max = Math.max(max, i - start + 1);
+            System.out.println(s.substring(start, i));
+        }
+        System.out.println(max);
+        return max;
+    }
+
+    public static void main(String[] args) {
+        new leetcode3().lengthOfLongestSubstring2("pwwkew");
+    }
+
     public int lengthOfLongestSubstring1(String s) {
         char[] charArray = s.toCharArray();
         int length = s.length();

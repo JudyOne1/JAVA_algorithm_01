@@ -1,6 +1,33 @@
 package ListNode;
 
 public class leetcode25 {
+    public ListNode reverseKGroup2(ListNode head, int k) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode p0 = dummy;
+        int count = 0;
+        while (p0.next != null) {
+            p0 = p0.next;
+            count++;
+        }
+        p0 = dummy;
+        ListNode cur = head;
+        ListNode pre = null;
+        for (int i = 0; i < count/k; i++) {
+            for (int j = 0; j < k; j++) {
+                //p0 | pre - cur - nxt |
+                //   |         pre | cur
+                ListNode nxt = cur.next;
+                cur.next = pre;
+                pre = cur;
+                cur = nxt;
+            }
+            ListNode p0next = p0.next;
+            p0.next.next = cur;
+            p0.next = pre;
+            p0 = p0next;
+        }
+        return dummy.next;
+    }
 
     public ListNode reverseKGroup1(ListNode head, int k) {
         int n = 0;
