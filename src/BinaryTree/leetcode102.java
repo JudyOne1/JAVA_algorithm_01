@@ -1,11 +1,35 @@
 package BinaryTree;
 
+import java.sql.Array;
 import java.util.*;
 
 /**
  * 层序遍历二叉树
  */
 public class leetcode102 {
+    public List<List<Integer>> levelOrder2(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<>();
+        Queue<TreeNode> que = new LinkedList<>();
+        que.offer(root);
+        int len;
+        while (!que.isEmpty()) {
+            len = que.size();
+            List<Integer> list = new ArrayList<>();
+            while (len > 0) {
+                TreeNode cur = que.poll();
+                list.add(cur.val);
+                if (cur.left != null) que.offer(cur.left);
+                if (cur.right != null) que.offer(cur.right);
+                len--;
+            }
+            result.add(list);
+        }
+
+
+        return result;
+    }
+
+
     public List<List<Integer>> levelOrder1(TreeNode root) {
         List<List<Integer>> ans = new ArrayList<List<Integer>>();
         LinkedList<TreeNode> queue = new LinkedList<>();

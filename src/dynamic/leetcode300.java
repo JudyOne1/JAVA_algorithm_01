@@ -3,10 +3,10 @@ package dynamic;
 import java.util.Arrays;
 
 public class leetcode300 {
-    public int lengthOfLIS2(int[] nums) {
+    public int lengthOfLIS3(int[] nums) {
         int n = nums.length;
-        int[] dp = new int[n];
         int ans = 0;
+        int[] dp = new int[n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) {
@@ -14,6 +14,22 @@ public class leetcode300 {
                 }
             }
             ans = Math.max(ans, dp[i] + 1);
+        }
+        return ans;
+    }
+
+    public int lengthOfLIS2(int[] nums) {
+        int n = nums.length;
+        int[] dp = new int[n];
+        int ans = 0;
+        Arrays.fill(dp,1);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            ans = Math.max(ans, dp[i]);
         }
         return ans;
     }
