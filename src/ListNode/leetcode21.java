@@ -1,35 +1,64 @@
 package ListNode;
 
 public class leetcode21 {
-    public ListNode mergeTwoLists2(ListNode list1, ListNode list2) {
-        if (list1==null){
+    public ListNode mergeTwoLists3(ListNode list1, ListNode list2) {
+        if (list1 == null) {
             return list2;
         } else if (list2 == null) {
             return list1;
         }
-        ListNode dummy = new ListNode(0,list1);
+        ListNode dummy = new ListNode(0, null);
         ListNode cur = dummy;
-        while (list1 != null && list2 != null){
-            if (list1.val <= list2.val){
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
                 cur.next = list1;
                 list1 = list1.next;
-            }else {
+            } else {
                 cur.next = list2;
                 list2 = list2.next;
             }
             cur = cur.next;
         }
-        if (list1 != null){
+        if (list1 != null) {
             cur.next = list1;
-        }else if (list2 != null){
+        }
+
+        if (list2 != null) {
+            cur.next = list2;
+        }
+
+        return dummy.next;
+
+
+    }
+
+
+    public ListNode mergeTwoLists2(ListNode list1, ListNode list2) {
+        if (list1 == null) {
+            return list2;
+        } else if (list2 == null) {
+            return list1;
+        }
+        ListNode dummy = new ListNode(0, list1);
+        ListNode cur = dummy;
+        while (list1 != null && list2 != null) {
+            if (list1.val <= list2.val) {
+                cur.next = list1;
+                list1 = list1.next;
+            } else {
+                cur.next = list2;
+                list2 = list2.next;
+            }
+            cur = cur.next;
+        }
+        if (list1 != null) {
+            cur.next = list1;
+        } else if (list2 != null) {
             cur.next = list2;
         }
         return dummy.next;
 
     }
-
-
-
 
 
     public ListNode mergeTwoLists1(ListNode list1, ListNode list2) {
@@ -39,7 +68,7 @@ public class leetcode21 {
             if (list1.val < list2.val) {
                 cur.next = list1;
                 list1 = list1.next;
-            }else {
+            } else {
                 cur.next = list2;
                 list2 = list2.next;
             }

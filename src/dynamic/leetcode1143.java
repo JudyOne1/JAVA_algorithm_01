@@ -3,6 +3,26 @@ package dynamic;
 import java.util.Arrays;
 
 public class leetcode1143 {
+    public int longestCommonSubsequence1(String text1, String text2) {
+        char[] c1 = text1.toCharArray();
+        char[] c2 = text2.toCharArray();
+        int n = c1.length;
+        int m = c2.length;
+        int[][] dp = new int[n + 1][m + 1];
+        for (int i = 0; i < n + 1; i++) {
+            for (int j = 0; j < m + 1; j++) {
+                if (c1[i] == c2[j]) {
+                    dp[i + 1][j + 1] = dp[i][j] + 1;
+                } else {
+                    dp[i + 1][j + 1] = Math.max(dp[i + 1][j], dp[i][j + 1]);
+                }
+            }
+        }
+        return dp[n][m];
+
+
+    }
+
 
     public int longestCommonSubsequence(String text1, String text2) {
         char[] s;
@@ -18,6 +38,7 @@ public class leetcode1143 {
 
 //        return dp(text1, text2);
     }
+
     public int dp1(String text1, String text2) {
         char[] s = text1.toCharArray(), t = text2.toCharArray();
         int n = s.length, m = t.length;
@@ -25,24 +46,29 @@ public class leetcode1143 {
         for (int i = 0; i < n; ++i) {
             for (int j = 0; j < m; ++j) {
                 if (s[i] == t[j]) {
+                    //当前字符匹配，所以最长公共子序列长度加 1
                     f[i + 1][j + 1] = f[i][j] + 1;
                 } else {
                     f[i + 1][j + 1] = Math.max(f[i][j + 1], f[i + 1][j]);
+                    // 当前字符不匹配，则 dp[i][j] 等于 dp[i - 1][j] 和 dp[i][j - 1] 中的较大值，
+                    // 表示最长公共子序列可能来自 text1 的前 i - 1 个字符和 text2 的前 j 个字符，
+                    // 或者来自 text1 的前 i 个字符和 text2 的前 j - 1 个字符。
                 }
             }
         }
         return f[n][m];
     }
-    public int dpM(String text1, String text2){
+
+    public int dpM(String text1, String text2) {
         char[] s = text1.toCharArray();
         char[] t = text2.toCharArray();
         int n = s.length, m = t.length;
         int[][] f = new int[n + 1][m + 1];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (s[i] == t[j]){
+                if (s[i] == t[j]) {
                     f[i + 1][j + 1] = f[i][j] + 1;
-                }else {
+                } else {
                     f[i + 1][j + 1] = Math.max(f[i][j + 1], f[i + 1][j]);
                 }
             }
@@ -62,7 +88,6 @@ public class leetcode1143 {
         }
         return cache[i][j] = Math.max(dfs(i - 1, j, s, t, cache), dfs(i, j - 1, s, t, cache));
     }
-
 
 
     public int dp(String text1, String text2) {
