@@ -3,6 +3,31 @@ package Array;
 import java.util.Arrays;
 
 public class leetcode31 {
+    public void nextPermutation1(int[] nums) {
+
+        int len = nums.length;
+        for (int i = len - 1; i >= 0; i--) {
+            if (i == 0) {
+                //54321 => 12345
+                Arrays.sort(nums);
+                return;
+            } else if (nums[i] > nums[i - 1]) {
+                //123 5 43 => 123 3 45 => 124 3 35
+                Arrays.sort(nums, i, len);
+                for (int j = i; j < len; j++) {
+                    if (nums[j] > nums[i - 1]) {
+                        //找第一个大于nums[i-1]的数，进行交换
+                        int temp = nums[j];
+                        nums[j] = nums[i - 1];
+                        nums[i - 1] = temp;
+                        return;
+                    }
+                }
+
+            }
+        }
+    }
+
     public void nextPermutation(int[] nums) {
         int n = nums.length, k = n - 1;
         //从后往前找，找到第一个下降的位置【从后往前是升序,找到第一个转折点】
