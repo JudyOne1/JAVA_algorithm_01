@@ -5,13 +5,27 @@ import com.sun.xml.internal.bind.v2.model.core.ID;
 import java.util.Arrays;
 
 public class leetcode53 {
+    public int maxSubArray2(int[] nums) {
+        int sum = 0;
+        int max = 0;
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            max = Math.max(max, sum);
+            if (sum <= 0) {
+                sum = 0;
+            }
+        }
+        return max;
+    }
+
+
     public int maxSubArray1(int[] nums) {
         int res = Integer.MIN_VALUE;
         int cur = 0;
         for (int i = 0; i < nums.length; i++) {
             cur += nums[i];
             res = Math.max(res, cur);
-            if (cur <= 0){
+            if (cur <= 0) {
                 cur = 0;
             }
         }
@@ -19,19 +33,20 @@ public class leetcode53 {
         return res;
 
     }
+
     public int maxSubArray(int[] nums) {
-        if (nums.length == 1){
+        if (nums.length == 1) {
             return nums[0];
         }
         int ans = Integer.MIN_VALUE;
         int count = 0;
         // 遍历数组，计算连续子数组的和
-        for (int i = 0; i < nums.length; i++){
+        for (int i = 0; i < nums.length; i++) {
             count += nums[i];
             // 更新最大和
             ans = Math.max(ans, count);
             // 如果当前累计和小于等于0，重置累计和为0，拉低总和
-            if (count <= 0){
+            if (count <= 0) {
                 count = 0;
             }
         }
@@ -76,6 +91,6 @@ public class leetcode53 {
     }
 
     public static void main(String[] args) {
-        new leetcode53().maxSubArray(new int[]{-2,-1});
+        new leetcode53().maxSubArray(new int[]{-2, -1});
     }
 }
