@@ -3,6 +3,25 @@ package dynamic;
 import java.util.Arrays;
 
 public class leetcode300 {
+
+    public int lengthOfLIS4(int[] nums) {
+        int[] dp = new int[nums.length];
+        int max = 0;
+        Arrays.fill(dp, 1);
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = 0; j < i; j++) {
+                if (nums[i] > nums[j]) {
+                    //i可以放在j后面，那么i的长度就是j的长度+1
+                    dp[i] = Math.max(dp[i], dp[j] + 1);
+                }
+            }
+            max = Math.max(max, dp[i]);
+        }
+        return max;
+
+    }
+
+
     public int lengthOfLIS3(int[] nums) {
         int n = nums.length;
         int ans = 0;
@@ -22,7 +41,7 @@ public class leetcode300 {
         int n = nums.length;
         int[] dp = new int[n];
         int ans = 0;
-        Arrays.fill(dp,1);
+        Arrays.fill(dp, 1);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < i; j++) {
                 if (nums[i] > nums[j]) {

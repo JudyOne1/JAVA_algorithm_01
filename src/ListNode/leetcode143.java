@@ -6,10 +6,37 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class leetcode143 {
+
+    public void reorderList2(ListNode head) {
+        if (head == null) {
+            return;
+        }
+        //存到 list 中去
+        List<ListNode> list = new ArrayList<>();
+        while (head != null) {
+            list.add(head);
+            head = head.next;
+        }
+        //头尾指针依次取元素
+        int i = 0;
+        int j = list.size() - 1;
+        while (i < j) {
+            list.get(i).next = list.get(j);
+            i++;
+            if (i == j){
+                break;
+            }
+            list.get(j).next = list.get(i);
+            j--;
+        }
+        list.get(i).next = null;
+    }
+
     public static void main(String[] args) {
         leetcode143 leetcode143 = new leetcode143();
         leetcode143.reorderList(new leetcode143().new ListNode(1, new leetcode143().new ListNode(2, new leetcode143().new ListNode(3, new leetcode143().new ListNode(4, new leetcode143().new ListNode(5))))));
     }
+
     public void reorderList1(ListNode head) {
         if (head == null) {
             return;
@@ -69,6 +96,7 @@ public class leetcode143 {
         }
         return pre;
     }
+
     class ListNode {
         int val;
         ListNode next;
