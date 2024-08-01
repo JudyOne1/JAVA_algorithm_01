@@ -5,6 +5,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class leetcode3 {
+    public int lengthOfLongestSubstring3(String s) {
+        //类似于滑动窗口
+        char[] charArray = s.toCharArray();
+        int length = charArray.length;
+        int max = 0;
+        int start = 0;
+        boolean[] helper = new boolean[128];
+        for (int i = 0; i < length; i++) {
+            char c = charArray[i];
+            while (helper[c]) {
+                helper[charArray[start]] = false;
+                start++;
+            }
+            helper[c] = true;
+            max = Math.max(max, i - start + 1);
+        }
+        return max;
+
+    }
+
+
     public int lengthOfLongestSubstring2(String s) {
 
         boolean[] helper = new boolean[128];
@@ -15,13 +36,10 @@ public class leetcode3 {
             while (helper[c]) {
                 helper[s.charAt(start)] = false;
                 start++;
-
             }
             helper[c] = true;
             max = Math.max(max, i - start + 1);
-            System.out.println(s.substring(start, i));
         }
-        System.out.println(max);
         return max;
     }
 
