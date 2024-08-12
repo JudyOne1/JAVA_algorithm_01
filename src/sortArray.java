@@ -34,6 +34,7 @@ public class sortArray {
         int pivotIndex = random.nextInt(r - l + 1) + l;
         // 获取基准元素的值
         int pivot = nums[pivotIndex];
+        //把基准元素换到最右边
         swap(nums, pivotIndex, r);
 
         // 初始化两个指针i和j
@@ -47,7 +48,7 @@ public class sortArray {
             // *调用是在while (i < j)的循环内部，所以当swap(nums, i, j)被执行时，i一定是小于j的。因此，这里不需要再额外判断i是否大于j。
             swap(nums, i, j);
         }
-        // 当i等于j时，交换nums[i]和基准元素
+        // 当i等于j时，交换nums[i]和基准元素  把基准元素换回来
         swap(nums, i, r);
         // 返回基准元素的最终位置
         return i;
@@ -63,6 +64,11 @@ public class sortArray {
 
 
     //方法二、堆排序
+    /*
+     排序其实主要有两个步骤
+        1.建堆，通过下沉操作建堆效率更高，具体过程是，找到最后一个非叶子节点，然后从后往前遍历执行下沉操作。
+        2.排序，将堆顶元素（代表最大元素）与最后一个元素交换，然后新的堆顶元素进行下沉操作，递归执行上诉操作，则可以完成排序。
+     */
     public int[] sortArray_2_heapSort(int[] nums) {
         int len = nums.length;
         // 构建大顶堆
@@ -79,22 +85,23 @@ public class sortArray {
         return nums;
     }
 
-    // 堆化函数，将以i为根的子树调整为大顶堆
+    // 堆化函数，将以i为根的子树调整为大顶堆，下沉
     void heapify(int[] nums, int len, int i) {
         int largest = i;
-        int left = 2 * i + 1;
-        int right = 2 * i + 2;
+        int left = 2 * i + 1;//左儿子
+        int right = 2 * i + 2;//右儿子
         if (left < len && nums[left] > nums[largest]) {
             largest = left;
         }
         if (right < len && nums[right] > nums[largest]) {
             largest = right;
         }
-        if (largest != i) {
+        if (largest != i) {//需要交换，继续往下
             swap(nums, i, largest);
             // 递归调整被交换元素的子树
             heapify(nums, len, largest);
         }
+        //没交换
     }
 
 
