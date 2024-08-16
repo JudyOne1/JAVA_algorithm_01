@@ -7,6 +7,40 @@ package search;
  * 这种情况下，后半部分有序。因此如果 nums[mid] <target<=nums[end]，则在后半部分找，否则去前半部分找。
  */
 public class leetcode33 {
+
+    public int search3(int[] nums, int target) {
+        //二分
+
+        int left = 0;
+        int right = nums.length - 1;
+        while (left <= right) {
+            int mid = (right - left) / 2 + left;
+            //升序
+            if (nums[mid] == target) {
+                return mid;
+            }
+            if (nums[mid] < nums[right]) {
+                // 右半边有序
+                if (nums[mid] < target && target <= nums[right]) {
+                    //在有序范围内
+                    left = mid + 1;
+                } else {
+                    right = mid - 1;
+                }
+            } else {
+                // 左半边有序
+                if (nums[left] <= target && target < nums[mid]) {
+                    //在有序范围内
+                    right = mid - 1;
+                } else {
+                    left = mid + 1;
+                }
+            }
+        }
+        return -1;
+    }
+
+
     public int search2(int[] nums, int target) {
         int len = nums.length;
         if (len == 0) return -1;

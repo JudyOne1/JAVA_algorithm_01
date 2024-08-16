@@ -7,6 +7,40 @@ import java.util.*;
  * 层序遍历二叉树
  */
 public class leetcode102 {
+    public List<List<Integer>> levelOrder3(TreeNode root) {
+        if (root == null){
+            return null;
+        }
+        ArrayList<List<Integer>> ans = new ArrayList<>();
+
+        //queue
+        Queue<TreeNode> nodes = new LinkedList<>();
+        nodes.offer(root);
+        int len = nodes.size();
+        while (!nodes.isEmpty()) {
+            len = nodes.size();
+            ArrayList<Integer> level = new ArrayList<>();
+            while (len > 0) {
+                TreeNode cur = nodes.poll();
+                level.add(cur.val);
+                if (cur.left != null) {
+                    nodes.offer(cur.left);
+                }
+                if (cur.right != null) {
+                    nodes.offer(cur.right);
+                }
+
+                len--;
+            }
+
+            ans.add(level);
+
+        }
+        return ans;
+
+    }
+
+
     public List<List<Integer>> levelOrder2(TreeNode root) {
         List<List<Integer>> result = new ArrayList<>();
         Queue<TreeNode> que = new LinkedList<>();

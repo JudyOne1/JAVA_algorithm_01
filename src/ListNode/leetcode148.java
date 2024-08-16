@@ -5,6 +5,79 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
 import java.util.*;
 
 public class leetcode148 {
+
+    public ListNode sortList3(ListNode head) {
+        //base case
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+
+        //快慢指针找中点
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode temp = slow.next;
+        slow.next = null;
+
+        ListNode left = sortList3(head);
+        ListNode right = sortList3(temp);
+        //归并
+        ListNode dummy = new ListNode();
+        ListNode newHead = dummy;
+        while (left != null && right != null) {
+            if (left.val <= right.val) {
+                newHead.next = left;
+                left = left.next;
+                newHead = newHead.next;
+            } else {
+                newHead.next = right;
+                right = right.next;
+                newHead = newHead.next;
+            }
+        }
+        newHead.next = left == null ? right : left;
+        return dummy.next;
+    }
+
+
+    public ListNode sortList2(ListNode head) {
+        if (head == null || head.next == null) {
+            return head;
+        }
+        //快慢指针
+        ListNode fast = head.next, slow = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        //找到中点
+        ListNode tmp = slow.next;
+        slow.next = null;
+        //归并递归
+        ListNode left = sortList2(head);
+        ListNode right = sortList2(tmp);
+
+        //归并排序
+        ListNode h = new ListNode(0);
+        ListNode res = h;
+        while (left != null && right != null) {
+            if (left.val < right.val) {
+                h.next = left;
+                left = left.next;
+            } else {
+                h.next = right;
+                right = right.next;
+            }
+            h = h.next;
+        }
+        h.next = left != null ? left : right;
+        return res.next;
+
+    }
+
     public ListNode sortList1(ListNode head) {
         if (head == null || head.next == null) {
             return head;
