@@ -66,4 +66,39 @@ public class heapSort {
     }
 
 
+
+    public void heapSort(int[] nums) {
+        //建堆
+        int len = nums.length;
+        for (int i = len / 2 - 1; i >= 0; i--) {
+            heapify2(nums, len, i);
+        }
+        //排序
+        for (int i = len - 1; i >= 0; i--) {
+            swap(nums, i, 0);
+            heapify2(nums, i, 0);
+
+        }
+
+
+    }
+
+    private void heapify2(int[] nums, int len, int i) {
+        int left = i * 2 + 1;
+        int right = i * 2 + 2;
+        int largest = i;
+
+        if (left < len && nums[left] > nums[largest]) {
+            largest = left;
+        }
+        if (right < len && nums[right] > nums[largest]) {
+            largest = right;
+        }
+        if (largest != i) {
+            swap(nums, largest, i);
+            heapify2(nums, len, largest);
+        }
+    }
+
+
 }
