@@ -1,7 +1,31 @@
 package Array;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+
 public class leetcode42 {
     //利用单调栈 | 前后缀分解 | 双指针
+
+    public int trap3(int[] height) {
+        int n = height.length;
+        int[] preMax = new int[n];
+        preMax[0] = height[0];
+        for (int i = 1; i < n; i++) {
+            preMax[i] = Math.max(preMax[i - 1], height[i]);
+        }
+        int[] sufMax = new int[n];
+        sufMax[n - 1] = height[n - 1];
+        for (int i = n - 2; i >= 0; i--) {
+            sufMax[i] = Math.max(sufMax[i + 1], height[i]);
+        }
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            res += Math.min(preMax[i], sufMax[i]) - height[i];
+        }
+        return res;
+
+    }
+
     public int trap(int[] height) {
         // 初始化和计算从左到右的最大高度数组preMax
         int n = height.length;

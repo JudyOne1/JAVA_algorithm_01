@@ -1,6 +1,34 @@
 package map;
 
 public class leetcode200dfs {
+
+    public int numIslands2(char[][] grid) {
+        int count = 0;
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == '1') {
+                    dfs2(grid, i, j);
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    private void dfs2(char[][] grid, int i, int j) {
+        if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length || grid[i][j] != '1') {
+            return;
+        }
+        if (grid[i][j] == '1') {
+            grid[i][j] = '0';
+        }
+        dfs2(grid, i + 1, j);
+        dfs2(grid, i - 1, j);
+        dfs2(grid, i, j + 1);
+        dfs2(grid, i, j - 1);
+    }
+
     public int numIslands1(char[][] grid) {
         int count = 0;
         for (int i = 0; i < grid.length; i++) {
@@ -18,9 +46,9 @@ public class leetcode200dfs {
         if (i < 0 || i >= grid.length || j < 0 || j >= grid[0].length) {
             return;
         }
-        if (grid[i][j] == '1'){
+        if (grid[i][j] == '1') {
             grid[i][j] = '0';
-        }else{
+        } else {
             return;
         }
         dfs(grid, i + 1, j);

@@ -7,6 +7,7 @@ public class quickSort {
         int l = 0;
         int r = nums.length - 1;
         process(nums, l, r);
+        return nums;
     }
 
     private void process(int[] nums, int l, int r) {

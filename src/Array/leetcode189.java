@@ -1,9 +1,30 @@
 package Array;
 
 public class leetcode189 {
-    public void rotate(int[] nums, int k) {    int n = nums.length;
+    public void rotate1(int[] nums, int k) {
+        int n = nums.length;
+        k %= n; // 轮转 k 次等于轮转 k%n 次
+        reverse(nums, 0, n - 1);
+        reverse(nums, 0, k - 1);
+        reverse(nums, k, n - 1);
+    }
+
+    private void reverse(int[] nums, int i, int j) {
+        while (i < j) {
+            int temp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = temp;
+            i++;
+            j--;
+        }
+    }
+
+
+
+    public void rotate(int[] nums, int k) {
+        int n = nums.length;
         // 对k取模，确保k不超过数组长度，避免不必要的旋转
-        k=k%(n);
+        k = k % (n);
         // 创建一个新数组，长度为原数组的两倍，用于辅助旋转
         int[] nums2 = new int[nums.length * 2];
         // 将原数组元素复制到新数组中，实现元素的“复制和粘贴”

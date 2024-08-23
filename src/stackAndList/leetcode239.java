@@ -2,8 +2,35 @@ package stackAndList;
 
 import java.util.LinkedList;
 import java.util.PriorityQueue;
+import java.util.Stack;
 
 public class leetcode239 {
+
+    public int[] maxSlidingWindow3(int[] nums, int k) {
+        int[] ans = new int[nums.length - k + 1];
+        LinkedList<Integer> qmax = new LinkedList<>();
+        //保存下标
+        int left = 0;
+        for (int right = 0; right < nums.length; right++) {
+            while (!qmax.isEmpty() && nums[qmax.peekLast()] <= nums[right]) {
+                //非空且更小
+                qmax.pollLast();
+            }
+            qmax.addLast(right);
+            if (qmax.peekFirst() == right - k) {
+                //移除过期元素
+                qmax.pollFirst();
+            }
+            if (right - left + 1 == k) {
+                //形成窗口了
+                ans[left] = nums[qmax.peekFirst()];
+                left++;
+            }
+        }
+        return ans;
+    }
+
+
     public int[] maxSlidingWindow2(int[] nums, int k) {
         LinkedList<Integer> qmax = new LinkedList<Integer>();
         int[] res = new int[nums.length - k + 1];

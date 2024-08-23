@@ -2,6 +2,25 @@ package ListNode;
 
 public class leetcode82 {
 
+    public ListNode deleteDuplicates2(ListNode head) {
+        ListNode dummy = new ListNode(0, head);
+        ListNode cur = dummy;
+        while (cur.next != null && cur.next.next != null) {
+            int value = cur.next.val;
+            if (value == cur.next.next.val) {
+                while (cur.next != null && cur.next.val == value) {
+                    cur.next = cur.next.next;
+                }
+            } else {
+                cur = cur.next;
+            }
+
+        }
+        return dummy.next;
+
+    }
+
+
     public ListNode deleteDuplicates1(ListNode head) {
         ListNode dummy = new ListNode(0, head), cur = dummy;
         while (cur.next != null && cur.next.next != null) {

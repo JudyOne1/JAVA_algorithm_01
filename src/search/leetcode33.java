@@ -19,6 +19,7 @@ public class leetcode33 {
             if (nums[mid] == target) {
                 return mid;
             }
+            //2345671
             if (nums[mid] < nums[right]) {
                 // 右半边有序
                 if (nums[mid] < target && target <= nums[right]) {

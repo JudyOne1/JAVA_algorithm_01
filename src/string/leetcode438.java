@@ -5,32 +5,96 @@ import java.util.Arrays;
 import java.util.List;
 
 public class leetcode438 {
+    /**
+     * 先把p的字母统计出来，然后通过窗口遍历s，
+     * 判断值如果小于0了，说明字母不正确/字母重复多了，左边界往右直到不小于0(剔除多的字母/不正确的字母)，
+     * 不断通过窗口判断，如果窗口大小内没有小于0的问题，那么说明找到了
+     */
+    public List<Integer> findAnagrams4(String s, String p) {
+        List<Integer> ans = new ArrayList<>();
+        // 初始化一个数组来统计字符串 p 中每个字符的出现次数
+        int[] cnt = new int[26];
+        for (int i = 0; i < p.length(); i++) {
+            cnt[p.charAt(i) - 'a']++;
+        }
+
+        // l 和 r 分别表示滑动窗口的左右边界
+        int l = 0;
+        for (int r = 0; r < s.length(); r++) {
+            // 更新当前窗口中字符的计数数组
+            cnt[s.charAt(r) - 'a']--;
+            // 从左侧收缩窗口，直到当前字符的计数在限定范围内
+            while (cnt[s.charAt(r) - 'a'] < 0) {
+                //不正确了，左边界往右移动直到正确
+                cnt[s.charAt(l) - 'a']++;
+                l++;
+            }
+            // 检查当前窗口大小是否等于字符串 p 的大小
+            if (r - l + 1 == p.length()) {
+                ans.add(l);
+            }
+        }
+        return ans;
+    }
+
+
+    /**
+     * 用数组模拟哈希表，在for循环中，
+     * 如果右指针指向的字母对应数量小于0，
+     * 左指针右移，当窗口长度等于p的长度，就进行记录。
+     */
+    public List<Integer> findAnagrams3(String s, String p) {
+        List<Integer> ans = new ArrayList<>();
+        // 初始化一个数组来统计字符串 p 中每个字符的出现次数
+        int[] cnt = new int[26];
+        for (int i = 0; i < p.length(); i++) {
+            cnt[p.charAt(i) - 'a']++;
+        }
+        // l 和 r 分别表示滑动窗口的左右边界
+        int l = 0;
+        for (int r = 0; r < s.length(); r++) {
+            // 更新当前窗口中字符的计数数组
+            cnt[s.charAt(r) - 'a']--;
+            // 从左侧收缩窗口，直到当前字符的计数在限定范围内
+            while (cnt[s.charAt(r) - 'a'] < 0) {
+                cnt[s.charAt(l) - 'a']++;
+                l++;
+            }
+            // 检查当前窗口大小是否等于字符串 p 的大小
+            if (r - l + 1 == p.length()) {
+                ans.add(l);
+            }
+        }
+        return ans;
+
+    }
+
     public List<Integer> findAnagrams(String s, String p) {
         int n = s.length(), m = p.length();
         List<Integer> res = new ArrayList<>();
         // 如果字符串s的长度小于字符串p的长度，则直接返回空结果列表
-        if(n < m) return res;
+        if (n < m) return res;
 
         // 用于统计字符串p和滑动窗口中字符的频次
         int[] pCnt = new int[26];
         int[] sCnt = new int[26];
 
         // 初始化：统计字符串p中各字符的频次
-        for(int i = 0; i < m; i++){
+        for (int i = 0; i < m; i++) {
             pCnt[p.charAt(i) - 'a']++;
             sCnt[s.charAt(i) - 'a']++;
         }
 
         // 如果滑动窗口的字符频次与字符串p的字符频次相等，则将起始位置0加入结果列表
-        if(Arrays.equals(sCnt, pCnt)){
+        if (Arrays.equals(sCnt, pCnt)) {
             res.add(0);
         }
 
         // 滑动窗口从第m个字符开始，更新字符频次并检查是否与p的字符频次相等
-        for(int i = m; i < n; i++){
+        for (int i = m; i < n; i++) {
             sCnt[s.charAt(i - m) - 'a']--; // 窗口左侧字符出窗口，频次减1
             sCnt[s.charAt(i) - 'a']++; // 窗口右侧字符进窗口，频次加1
-            if(Arrays.equals(sCnt, pCnt)){
+            if (Arrays.equals(sCnt, pCnt)) {
                 // 如果滑动窗口的字符频次与字符串p的字符频次相等，将当前位置加入结果列表
                 res.add(i - m + 1);
             }
