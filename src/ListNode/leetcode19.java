@@ -1,6 +1,26 @@
 package ListNode;
 
 public class leetcode19 {
+    public ListNode removeNthFromEnd2(ListNode head, int n) {
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode slow = dummy;
+        ListNode fast = dummy;
+        for (int i = 0; i <= n; i++) {
+            fast = fast.next;
+        }
+        //dummy-1-2-3-4-5（2）
+        while (fast != null){
+            slow = slow.next;
+            fast = fast.next;
+        }
+        slow.next = slow.next.next;
+        return dummy.next;
+
+    }
+
+
+
     public ListNode removeNthFromEnd1(ListNode head, int n) {
         ListNode dummyNode = new ListNode(0); // 使用虚拟节点作为头节点的前一个节点，简化操作
         dummyNode.next = head;

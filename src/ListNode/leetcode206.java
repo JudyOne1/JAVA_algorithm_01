@@ -3,8 +3,24 @@ package ListNode;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class leetcode206 {
+
+    public ListNode reverseList3(ListNode head) {
+        ListNode pre = null;
+        ListNode cur = head;
+        while (cur != null) {
+            ListNode temp = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = temp;
+        }
+        return pre;
+
+    }
+
+
     public ListNode reverseList2(ListNode head) {
         ListNode pre = null, cur = head;
         while (cur != null) {

@@ -1,6 +1,23 @@
 package BinaryTree;
 
 public class leetcode543 {
+
+    public int diameterOfBinaryTree1(TreeNode root) {
+        return dfs1(root);
+    }
+
+    public int dfs1(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = dfs(root.left) + 1;
+        int right = dfs(root.right) + 1;
+        ans = Math.max(ans, left + right);
+        return Math.max(left, right);
+
+    }
+
+
     public int diameterOfBinaryTree(TreeNode root) {
         dfs(root);
         return ans;

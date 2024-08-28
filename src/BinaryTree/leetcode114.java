@@ -6,6 +6,19 @@ import java.util.Map;
 import java.util.Set;
 
 public class leetcode114 {
+    private TreeNode pre = null;
+
+    public void flatten1(TreeNode root) {
+        //后序遍历
+        if (root == null)
+            return;
+        flatten1(root.right);
+        flatten1(root.left);
+        root.right = pre;
+        root.left = null;
+        pre = root;
+    }
+
     //使用哈希表存储前序遍历结果
     public void flatten(TreeNode root) {
         if (root == null) { // 如果根节点为空，则直接返回，无需操作

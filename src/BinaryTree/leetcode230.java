@@ -1,8 +1,32 @@
 package BinaryTree;
 
 public class leetcode230 {
+    /**
+     * 给定一个二叉搜索树的根节点 root ，和一个整数 k ，
+     * 请你设计一个算法查找其中第 k 小的元素（从 1 开始计数）。
+     */
+    public int kthSmallest1(TreeNode root, int k) {
+        dfs1(root, k);
+        return res;
+    }
+
+    private void dfs1(TreeNode root, int k) {
+        if (root == null) {
+            return;
+        }
+        dfs1(root.left, k);
+        count++;
+        if (count == k) {
+            res = root.val;
+            return;
+        }
+        dfs1(root.right, k);
+    }
+
+
     int res;
     int count = 0;
+
     public int kthSmallest(TreeNode root, int k) {
         //中序遍历二叉搜索树，找到第k个节点
         dfs(root, k);

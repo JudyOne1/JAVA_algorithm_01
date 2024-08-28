@@ -1,6 +1,19 @@
 package ListNode;
 
 public class leetcode141 {
+    public boolean hasCycle1(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+            if (slow == fast) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean hasCycle(ListNode head) {
         // 初始化慢指针和快指针都指向头节点
         ListNode slow = head;

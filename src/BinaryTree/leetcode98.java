@@ -5,6 +5,21 @@ import java.util.List;
 import java.util.Stack;
 
 public class leetcode98 {
+
+    public boolean isValidBST2(TreeNode root) {
+        return dfs2(root, Long.MIN_VALUE, Long.MAX_VALUE);
+    }
+
+    public boolean dfs2(TreeNode root, long left, long right) {
+        if (root == null) {
+            return true;
+        }
+        return root.val > left && root.val < right
+                && dfs2(root.left, left, root.val)
+                && dfs2(root.right, root.val, right);
+    }
+
+
     public boolean isValidBST1(TreeNode root) {
         return dfs(root, Long.MIN_VALUE, Long.MAX_VALUE);
     }

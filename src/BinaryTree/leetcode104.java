@@ -7,6 +7,30 @@ import java.util.Queue;
 
 public class leetcode104 {
     public List<List<Integer>> resList = new ArrayList<List<Integer>>();
+
+    public int maxDepth1(TreeNode root) {
+        if (null == root){
+            return 0;
+        }
+        int lenght = 0;
+        LinkedList<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        int size = queue.size();
+        while (!queue.isEmpty()) {
+            size = queue.size();
+            while (size >0){
+                size--;
+                TreeNode cur = queue.poll();
+                if (cur.left != null) queue.offer(cur.left);
+                if (cur.right != null) queue.offer(cur.right);
+
+            }
+            lenght++;
+        }
+        return lenght;
+
+
+    }
     public int maxDepth(TreeNode root) {
         //使用层序遍历查看有多少层即可
         if (root == null) {

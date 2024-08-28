@@ -3,6 +3,37 @@ package ListNode;
 import java.util.ArrayList;
 
 public class leetcode234 {
+    public boolean isPalindrome1(ListNode head) {
+        // 找到链表的中间节点
+        ListNode slow = head;
+        ListNode fast = head;
+        while (fast!= null && fast.next!= null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // 将链表的后半部分翻转
+        ListNode prev = null;
+        ListNode curr = slow;
+        while (curr!= null) {
+            ListNode next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        // 比较链表的前半部分和后半部分是否相等
+        ListNode left = head;
+        ListNode right = prev;
+        while (right!= null) {
+            if (left.val!= right.val) {
+                return false;
+            }
+            left = left.next;
+            right = right.next;
+        }
+        return true;
+    }
     public boolean isPalindrome(ListNode head) {
         // 将链表中的元素值存入ArrayList中
         ArrayList<Integer> list = new ArrayList<>();

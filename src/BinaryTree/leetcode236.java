@@ -2,6 +2,19 @@ package BinaryTree;
 
 public class leetcode236 {
 
+    public TreeNode lowestCommonAncestor4(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null || root == p || root == q) {
+            return root;
+        }
+        TreeNode left = lowestCommonAncestor4(root.left, p, q);
+        TreeNode right = lowestCommonAncestor4(root.right, p, q);
+
+        if (left != null && right != null) {
+            return root;
+        }
+        return left == null ? right : left;
+
+    }
 
 
     public TreeNode lowestCommonAncestor3(TreeNode root, TreeNode p, TreeNode q) {

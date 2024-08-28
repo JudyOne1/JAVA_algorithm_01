@@ -6,6 +6,27 @@ import java.util.List;
 import java.util.Queue;
 
 public class leetcode199 {
+    /**
+     * 思路：先递归右子树，再递归左子树，
+     * 当某个深度首次到达时，对应的节点就在右视图中。
+     */
+    public List<Integer> rightSideView1(TreeNode root) {
+        List<Integer> ans = new ArrayList<>();
+        dfs(root, 0, ans);
+        return ans;
+    }
+
+    private void dfs(TreeNode root, int depth, List<Integer> ans) {
+        if (root == null) {
+            return;
+        }
+        if (depth == ans.size()) { // 这个深度首次遇到
+            ans.add(root.val);
+        }
+        dfs(root.right, depth + 1, ans); // 先递归右子树，保证首次遇到的一定是最右边的节点
+        dfs(root.left, depth + 1, ans);
+    }
+
     public List<Integer> resList = new ArrayList<Integer>();
     public List<Integer> rightSideView(TreeNode root) {
         //层序遍历 每层最右边的节点

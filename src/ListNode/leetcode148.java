@@ -1,10 +1,76 @@
 package ListNode;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import java.util.*;
 
 public class leetcode148 {
+    public ListNode sortList5(ListNode head) {
+        //base case
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode temp = slow.next;
+        slow.next = null;
+        ListNode left = sortList5(head);
+        ListNode right = sortList5(temp);
+        //归并
+        ListNode dummy = new ListNode();
+        ListNode newHead = dummy;
+        while (left != null && right != null) {
+            if (left.val <= right.val) {
+                newHead.next = left;
+                left = left.next;
+
+            } else {
+                newHead.next = right;
+                right = right.next;
+            }
+            newHead = newHead.next;
+        }
+        newHead.next = left == null ? right : left;
+        return dummy.next;
+    }
+
+    public ListNode sortList4(ListNode head) {//二分
+        //base case
+        if (head == null || head.next == null) {
+            return head;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        ListNode temp = slow.next;
+        slow.next = null;
+        ListNode left = sortList4(head);
+        ListNode right = sortList4(temp);
+        //归并
+        ListNode dummy = new ListNode();
+        ListNode newHead = dummy;
+        while (left != null && right != null) {
+            if (left.val <= right.val) {
+                newHead.next = left;
+                left = left.next;
+                newHead = newHead.next;
+            } else {
+                newHead.next = right;
+                right = right.next;
+                newHead = newHead.next;
+            }
+        }
+        newHead.next = left == null ? right : left;
+        return dummy.next;
+
+
+    }
 
     public ListNode sortList3(ListNode head) {
         //base case

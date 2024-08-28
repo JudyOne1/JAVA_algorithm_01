@@ -10,6 +10,22 @@ import java.util.Stack;
  * 二叉树的中序遍历
  */
 public class leetcode94 {
+
+    public List<Integer> inorderTraversal2(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<>();
+        dfs(root, list);
+        return list;
+    }
+
+    public TreeNode dfs(TreeNode root, List<Integer> res){
+        if (root == null){
+            return null;
+        }
+        dfs(root.left, res);
+        res.add(root.val);
+        dfs(root.right, res);
+        return root;
+    }
     /**
      * 中序遍历二叉树。
      *

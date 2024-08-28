@@ -7,6 +7,33 @@ import java.util.Stack;
  * 翻转二叉树【镜像翻转】
  */
 public class leetcode226 {
+
+    public TreeNode invertTree2(TreeNode root) {
+        //左右子树交换
+        dfs2(root);
+        return root;
+    }
+    public TreeNode dfs2(TreeNode root){
+        if (root == null){
+            return null;
+        }
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        dfs2(root.left);
+        dfs2(root.right);
+        return root;
+    }
+
+
+
+
+
+
+
+
+
+
     //递归解法
     public TreeNode invertTree1(TreeNode root) {
         dfs(root);
