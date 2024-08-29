@@ -5,6 +5,44 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class leetcode131 {
+    List<List<String>> result = new ArrayList<>();
+    LinkedList<String> path = new LinkedList<>();
+
+    public List<List<String>> partition2(String s) {
+        dfs2(s, 0);
+        return result;
+    }
+
+    private void dfs2(String s, int index) {
+        if (index == s.length()) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = index; i < s.length(); i++) {
+            String substring = s.substring(index, i + 1);
+            if (isPalindrome2(substring)) {
+                path.add(substring);
+                dfs2(s, i+1);
+                path.removeLast();
+            }
+
+        }
+    }
+
+    private boolean isPalindrome2(String str) {
+        int left = 0;
+        int right = str.length() - 1;
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+
+
     public List<List<String>> partition1(String s) {
         List<List<String>> result = new ArrayList<>();
         LinkedList<String> path = new LinkedList<>();

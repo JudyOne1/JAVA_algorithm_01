@@ -12,6 +12,26 @@ import java.util.List;
  * 解集 不能 包含重复的子集。你可以按 任意顺序 返回解集。
  */
 public class leetcode78 {
+    List<List<Integer>> result = new ArrayList<>();
+    LinkedList<Integer> path = new LinkedList<>();
+
+    public List<List<Integer>> subsets2(int[] nums) {
+        dfs2(nums, 0);
+        return result;
+    }
+
+    private void dfs2(int[] nums, int index) {
+        if (index == nums.length) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        path.add(nums[index]);
+        dfs2(nums, index + 1);
+        path.removeLast();
+        dfs2(nums, index + 1);
+
+    }
+
     public List<List<Integer>> subsets1(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
         LinkedList<Integer> path = new LinkedList<>();
@@ -19,19 +39,19 @@ public class leetcode78 {
         // 初始化结果集，加入空集作为起始
         result.add(new ArrayList<>());
         int index = 0;
-        dfs(nums,result,path,index);
+        dfs(nums, result, path, index);
         return result;
     }
 
     private void dfs(int[] nums, List<List<Integer>> result, LinkedList<Integer> path, int index) {
-        if (index == nums.length){
+        if (index == nums.length) {
             result.add(new ArrayList<>(path));
             return;
         }
         path.add(nums[index]);
-        dfs(nums,result,path,index+1);//拿
+        dfs(nums, result, path, index + 1);//拿
         path.removeLast();
-        dfs(nums,result,path,index+1);//不拿
+        dfs(nums, result, path, index + 1);//不拿
 
     }
 

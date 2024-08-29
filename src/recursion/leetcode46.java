@@ -11,29 +11,58 @@ import java.util.List;
  * 你可以 按任意顺序 返回答案。
  */
 public class leetcode46 {
-    public List<List<Integer>> permute2(int[] nums) {
-        List<List<Integer>> result = new ArrayList<>();
-        if (nums.length == 0) return result;
-        List<Integer> path = new ArrayList<>();
+
+    public List<List<Integer>> permute3(int[] nums) {
+        ArrayList<List<Integer>> ans = new ArrayList<>();
+        if (nums == null){
+            return ans;
+        }
+        ArrayList<Integer> path = new ArrayList<>();
         boolean[] arrived = new boolean[nums.length];
-        int index = 0;
-        dfs1(nums,result,path,arrived);
-        return result;
+        dfs2(nums,arrived,path,ans);
+        return ans;
     }
 
-    private void dfs1(int[] nums, List<List<Integer>> result, List<Integer> path, boolean[] arrived) {
-        if (path.size() == nums.length){
-            result.add(new ArrayList<>(path));
+    private void dfs2(int[] nums, boolean[] arrived, ArrayList<Integer> path, ArrayList<List<Integer>> ans) {
+        if (path.size() == nums.length) {
+            ans.add(new ArrayList<>(path));
             return;
         }
         for (int i = 0; i < nums.length; i++) {
             if (arrived[i]){
                 continue;
             }
+            arrived[i] = true;
+            path.add(nums[i]);
+            dfs2(nums,arrived,path,ans);
+            arrived[i] = false;
+            path.remove(path.size() - 1);
+        }
+    }
+
+
+    public List<List<Integer>> permute2(int[] nums) {
+        List<List<Integer>> result = new ArrayList<>();
+        if (nums.length == 0) return result;
+        List<Integer> path = new ArrayList<>();
+        boolean[] arrived = new boolean[nums.length];
+        dfs1(nums, result, path, arrived);
+        return result;
+    }
+
+    private void dfs1(int[] nums, List<List<Integer>> result, List<Integer> path, boolean[] arrived) {
+        if (path.size() == nums.length) {
+            result.add(new ArrayList<>(path));
+            return;
+        }
+        for (int i = 0; i < nums.length; i++) {
+            if (arrived[i]) {
+                continue;
+            }
             path.add(nums[i]);
             arrived[i] = true;
-            dfs1(nums,result,path,arrived);
-            path.remove(path.size()-1);
+            dfs1(nums, result, path, arrived);
+            path.remove(path.size() - 1);
             arrived[i] = false;
         }
     }
@@ -42,25 +71,25 @@ public class leetcode46 {
         boolean[] visited = new boolean[nums.length];
         ArrayList<List<Integer>> ans = new ArrayList<>();
         LinkedList<Integer> path = new LinkedList<>();
-        dfs(nums,visited,ans,path);
+        dfs(nums, visited, ans, path);
         return ans;
     }
 
-    public void dfs(int[] nums,boolean[] visited,List<List<Integer>> result,LinkedList<Integer> path){
-        if (path.size() == nums.length){
+    public void dfs(int[] nums, boolean[] visited, List<List<Integer>> result, LinkedList<Integer> path) {
+        if (path.size() == nums.length) {
             result.add(new ArrayList<>(path));
             return;
         }
 
         for (int i = 0; i < nums.length; i++) {
-            if (!visited[i]){
+            if (!visited[i]) {
                 //没来过
                 path.add(nums[i]);
                 visited[i] = true;
-                dfs(nums,visited,result,path);
+                dfs(nums, visited, result, path);
                 visited[i] = false;
                 path.removeLast();
-            }else {
+            } else {
                 continue;
             }
 

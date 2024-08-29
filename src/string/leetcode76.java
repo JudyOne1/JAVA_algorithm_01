@@ -3,6 +3,47 @@ package string;
 import java.util.*;
 
 public class leetcode76 {
+    public String minWindow2(String s, String t) {
+
+        int len = s.length();
+        int ansLeft = -1;
+        int ansRight = len;
+        int[] cntS = new int[128];
+        int[] cntT = new int[128];
+        int left = 0;
+        for (char c : t.toCharArray()) {
+            cntT[c]++;
+        }
+
+        for (int right = 0; right < len; right++) {
+            cntS[s.charAt(right)]++;
+            while (isCovered(cntS, cntT)) {
+                if (right - left < ansRight - ansLeft) {
+                    ansLeft = left;
+                    ansRight = right;
+                }
+                cntS[s.charAt(left)]--;
+                left++;
+            }
+        }
+
+        return ansLeft == -1 ? "" : s.substring(ansLeft, ansRight + 1);
+    }
+
+    private boolean isCovered(int[] cntS, int[] cntT) {
+        for (int i = 'A'; i <= 'Z'; i++) {
+            if (cntS[i] < cntT[i]) {
+                return false;
+            }
+        }
+        for (int i = 'a'; i <= 'z'; i++) {
+            if (cntS[i] < cntT[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     public String minWindow(String S, String t) {
         char[] s = S.toCharArray();
@@ -36,20 +77,6 @@ public class leetcode76 {
         return ansLeft < 0 ? "" : S.substring(ansLeft, ansRight + 1);
     }
 
-    private boolean isCovered(int[] cntS, int[] cntT) {
-        for (int i = 'A'; i <= 'Z'; i++) {
-            if (cntS[i] < cntT[i]) {
-                return false;
-            }
-        }
-        for (int i = 'a'; i <= 'z'; i++) {
-            if (cntS[i] < cntT[i]) {
-                return false;
-            }
-        }
-        return true;
-    }
-
 
     public String minWindow1(String s, String t) {
         // 如果源字符串长度小于目标字符串长度，直接返回空字符串
@@ -61,7 +88,7 @@ public class leetcode76 {
 
         // 遍历字符串s
         while (right < s.length()) {
-            String substring = s.substring(left, right+1); // 获取当前子串
+            String substring = s.substring(left, right + 1); // 获取当前子串
             // 判断当前子串是否覆盖了目标字符串t
             if (isCovered1(substring, t)) {
                 // 如果当前子串长度小于记录的最小子串长度，更新最小子串长度和结果字符串
@@ -70,7 +97,7 @@ public class leetcode76 {
                     res = substring;
                 }
                 left++; // 左指针右移，继续寻找下一个可能的子串
-            }else {
+            } else {
                 right++; // 如果当前子串未覆盖目标字符串t，右指针右移，扩展子串
             }
         }

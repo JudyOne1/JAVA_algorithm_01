@@ -12,6 +12,39 @@ import java.util.*;
  * 每个右括号都有一个对应的相同类型的左括号。
  */
 public class leetcode20 {
+    public boolean isValid4(String s) {
+        Stack<Character> stack = new Stack<>();
+        int len = s.length();
+        int index = 0;
+        while (index < len) {
+            //{（）}
+            char cur = s.charAt(index++);
+            if (!stack.isEmpty()) {
+                Character peek = stack.peek();
+                if (cur == '}' && peek == '{') {
+                    stack.pop();
+                } else if (cur == ')' && peek == '(') {
+                    stack.pop();
+                } else if (cur == ']' && peek == '[') {
+                    stack.pop();
+                } else if (cur == '(' || cur == '{' || cur == '[') {
+                    stack.push(cur);
+                } else {
+                    return false;
+                }
+            } else {
+                stack.push(cur);
+            }
+
+        }
+        if (stack.isEmpty()){
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
     public boolean isValid3(String s) {
         Map<Character, Character> map = new HashMap<Character, Character>() {{
             put('{', '}');
@@ -26,8 +59,7 @@ public class leetcode20 {
         for (Character c : s.toCharArray()) {
             if (map.containsKey(c)) {
                 stack.addLast(c);
-            }
-            else if (map.get(stack.removeLast()) != c) {
+            } else if (map.get(stack.removeLast()) != c) {
                 return false;
             }
         }

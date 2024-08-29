@@ -1,8 +1,31 @@
 package stackAndList;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 public class leetcode739 {
+    /**
+     * [73,74,75,71,69,72,76,73]
+     * 输出: [1,1,4,2,1,1,0,0]
+     */
+    public int[] dailyTemperatures1(int[] temperatures) {
+        int[] ans = new int[temperatures.length];
+        Stack<Integer> stack = new Stack<>();
+        for (int i = 0; i < temperatures.length; i++) {
+            int cur = temperatures[i];
+            while (!stack.isEmpty() && temperatures[stack.peek()] < cur){
+                ans[stack.peek()] = i - stack.peek();
+                stack.pop();
+            }
+            stack.push(i);
+        }
+        if (!stack.isEmpty()){
+            ans[stack.peek()] = 0;
+        }
+        return ans;
+    }
+
     public int[] dailyTemperatures(int[] temperatures) {
         // 创建一个数组用于存储结果，初始化为0
         int[] ans = new int[temperatures.length];

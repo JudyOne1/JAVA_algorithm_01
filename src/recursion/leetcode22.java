@@ -9,6 +9,28 @@ public class leetcode22 {
     private char[] path;
     private final List<String> ans = new ArrayList<>();
 
+    public List<String> generateParenthesis2(int n) {
+        this.n = n;
+        path = new char[n * 2];
+        dfs2(0, 0);
+        return ans;
+    }
+
+    private void dfs2(int i, int open) {
+        if (i == n * 2) {
+            ans.add(new String(path));
+            return;
+        }
+        if (open < n) {
+            path[i] = '(';
+            dfs2(i + 1, open + 1);
+        }
+        if (i - open < open) {
+            path[i] = ')';
+            dfs2(i + 1, open);
+        }
+    }
+
     public List<String> generateParenthesis1(int n) {
         this.n = n;
         path = new char[n * 2];

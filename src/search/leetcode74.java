@@ -1,6 +1,29 @@
 package search;
 
 public class leetcode74 {
+    public boolean searchMatrix1(int[][] matrix, int target) {
+        int col = matrix[0].length;
+        int row = matrix.length;
+        int plus = col * row;
+        return dfs1(matrix, target, 0, plus - 1);
+    }
+
+    private boolean dfs1(int[][] matrix, int target, int left, int right) {
+        if (left > right) {
+            return false;
+        }
+        int mid = (right + left) / 2;
+        int length = matrix[0].length;
+        int value = matrix[mid / length][mid % length];
+        if (value == target) {
+            return true;
+        } else if (value < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+        return dfs1(matrix, target, left, right);
+    }
 
     public boolean searchMatrix(int[][] matrix, int target) {
         // 计算矩阵的列数和行数

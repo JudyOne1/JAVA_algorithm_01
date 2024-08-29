@@ -4,6 +4,72 @@ import java.util.LinkedList;
 import java.util.Stack;
 
 public class leetcode394 {
+    public String decodeString3(String s) {
+        Stack<Integer> numStack = new Stack<>();
+        Stack<String> strStack = new Stack<>();
+        int num = 0;
+        String curString = "";
+        for (int i = 0; i < s.length(); i++) {
+            char cur = s.charAt(i);
+            if (Character.isDigit(cur)){
+                num = num * 10 + cur - '0';
+            } else if (cur == '[') {
+                numStack.push(num);
+                strStack.push(curString);
+                num = 0;
+                curString = "";
+            } else if (cur == ']') {
+                int times = numStack.pop();
+                StringBuilder temp = new StringBuilder(strStack.pop());
+                for (int j = 0; j < times; j++) {
+                    temp.append(curString);
+                }
+                curString = temp.toString();
+            }else {
+                curString+=cur;
+            }
+        }
+        return curString;
+    }
+    public String decodeString2(String s) {
+        //双栈，一个栈模拟数字，一个栈模拟字符串
+        Stack<Integer> numStack = new Stack<>();
+        Stack<String> stringStack = new Stack<>();
+
+        int num = 0;
+        String curString = "";
+
+        for (int i = 0; i < s.length(); i++) {
+            //当前字符
+            char c = s.charAt(i);
+
+            //如果是数字
+            if (Character.isDigit(c)) {
+                num = num * 10 + c - '0';
+            } else if (c == '[') {
+                //如果是左括号，就把当前数字和字符入栈,同时重置当前数字和当前字符串
+                numStack.push(num);
+                stringStack.push(curString);
+                num = 0;
+                curString = "";
+            } else if (c == ']') {
+                //如果是右括号，就进行解码
+                //1、得到当前字符串要重复的次数，也就是[]前的数字
+                int loopTimes = numStack.pop();
+                //注意这里创建的是栈顶元素的string容器
+                StringBuilder temp = new StringBuilder(stringStack.pop());
+                for (int j = 0; j < loopTimes; j++) {
+                    temp.append(curString);
+                }
+                curString = temp.toString();
+            } else {
+                //如果是字母就更新当前字母
+                curString += c;
+            }
+        }
+        return curString;
+    }
+
     public String decodeString1(String s) {
         StringBuilder sb = new StringBuilder();
         while (s.contains("[")) {

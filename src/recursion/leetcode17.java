@@ -11,6 +11,30 @@ import java.util.List;
  * 给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。
  */
 public class leetcode17 {
+    LinkedList<String> result = new LinkedList<String>();
+    public List<String> letterCombinations2(String digits) {
+        if (digits == null){
+            return result;
+        }
+        String str = "";
+        String[] helper = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+        dfs2(digits,helper,str,0);
+        return result;
+    }
+
+    private void dfs2(String digits, String[] helper, String str, int index) {
+        if (index == digits.length()){
+            result.add(new String(str));
+            return;
+        }
+        char[] charArray = helper[digits.charAt(index) - '0'].toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            str += charArray[i];
+            dfs2(digits,helper,str,index+1);
+            str = str.substring(0,str.length()-1);
+        }
+    }
+
     public List<String> letterCombinations1(String digits) {
         LinkedList<String> result = new LinkedList<String>();
         // 如果输入字符串为空，直接返回空结果列表
