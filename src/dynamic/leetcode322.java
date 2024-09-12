@@ -3,7 +3,65 @@ package dynamic;
 import java.util.Arrays;
 import java.util.Collections;
 
+/**
+ * 给你一个整数数组 coins ，表示不同面额的硬币；以及一个整数 amount ，表示总金额。
+ * <p>
+ * 计算并返回可以凑成总金额所需的 最少的硬币个数 。如果没有任何一种硬币组合能组成总金额，返回 -1 。
+ * <p>
+ * 你可以认为每种硬币的数量是无限的。
+ */
+
 public class leetcode322 {
+
+    public int coinChange3(int[] coins, int amount) {
+        int ans = dp3(coins, amount);
+
+//        int ans = dfs(coins, amount, 0);
+        return ans == Integer.MAX_VALUE / 2 ? -1 : ans;
+
+    }
+
+    private int dp3(int[] coins, int amount) {
+        int N = coins.length;
+        int[][] dp = new int[N + 1][amount + 1];
+        Arrays.fill(dp[N], Integer.MAX_VALUE / 2);
+        dp[N][0] = 0;
+
+        for (int i = N - 1; i >= 0; i--) {
+            for (int j = 0; j <= amount; j++) {
+                if (j < coins[i]) {
+                    dp[i][j] = dp[i + 1][j];
+                } else {
+                    dp[i][j] = Math.min(dp[i + 1][j], dp[i][j - coins[i]] + 1);
+                }
+            }
+        }
+        return dp[0][amount];
+    }
+
+    private int dfs3(int[] coins, int amount, int index) {
+        if (index == coins.length) {
+            return amount == 0 ? 0 : Integer.MAX_VALUE;
+        }
+        if (amount - coins[index] < 0) {
+            return dfs3(coins, amount, index + 1);
+        }
+        return Math.min(dfs3(coins, amount - coins[index], index) + 1
+                , dfs3(coins, amount, index + 1));
+    }
+
+    private int dfs2(int[] coins, int amount, int index) {
+        if (index == coins.length) {
+            return amount == 0 ? 0 : Integer.MAX_VALUE / 2;
+        }
+        if (amount - coins[index] < 0) {
+            return dfs2(coins, amount, index + 1);
+        }
+        return Math.min(dfs2(coins, amount, index + 1)
+                , dfs2(coins, amount - coins[index], index) + 1);
+    }
+
+
     public int coinChange2(int[] coins, int amount) {
         int n = coins.length;
         int[][] f = new int[n + 1][amount + 1];

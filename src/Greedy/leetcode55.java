@@ -3,6 +3,19 @@ package Greedy;
 import java.util.Arrays;
 
 public class leetcode55 {
+    public boolean canJump1(int[] nums) {
+        if (nums.length == 1) {
+            return true;
+        }
+        int coverRange = 0;
+        for (int i = 0; i <= coverRange; i++) {
+            coverRange = Math.max( i + nums[i], coverRange);
+            if (coverRange >= nums.length-1){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public boolean canJump(int[] nums) {
 
@@ -64,7 +77,7 @@ public class leetcode55 {
 
 
     public static void main(String[] args) {
-        new leetcode55().canJump(new int[]{3,2,1,0,4});
+        new leetcode55().canJump(new int[]{3, 2, 1, 0, 4});
     }
 
 }

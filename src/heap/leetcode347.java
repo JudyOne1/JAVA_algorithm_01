@@ -5,11 +5,28 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 public class leetcode347 {
+    public int[] topKFrequent1(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            map.put(num, map.getOrDefault(num, 0) + 1);
+        }
+        PriorityQueue<int[]> que = new PriorityQueue<>((a, b) -> b[1] - a[1]);
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            que.add(new int[]{entry.getKey(), entry.getValue()});
+        }
+        int[] ans = new int[k];
+        for (int i = 0; i < k; i++) {
+            ans[i] = que.poll()[0];
+        }
+        return ans;
+
+    }
+
     public int[] topKFrequent(int[] nums, int k) {
         //从队头到队尾按从大到小排就是最大堆（大顶堆）---> 队头元素相当于堆的根节点
-        Map<Integer,Integer> map = new HashMap<>(); //key为数组元素值,val为对应出现次数
+        Map<Integer, Integer> map = new HashMap<>(); //key为数组元素值,val为对应出现次数
         for (int num : nums) {
-            map.put(num, map.getOrDefault(num,0) + 1);
+            map.put(num, map.getOrDefault(num, 0) + 1);
         }
         //在优先队列中存储二元组(num, cnt),cnt表示元素值num在数组中的出现次数
         //出现次数按从队头到队尾的顺序是从大到小排,出现次数最多的在队头(相当于大顶堆)

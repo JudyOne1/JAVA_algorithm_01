@@ -4,6 +4,73 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 public class leetcode215 {
+    public int findKthLargest3(int[] nums, int k) {
+        int[] res = heapSort(nums);
+
+        return res[res.length - k];
+    }
+
+    int[] heapSort1(int[] nums) {
+        int len = nums.length;
+        for (int i = len / 2 - 1; i >= 0; i--) {
+            heapify1(nums, len, i);
+        }
+        for (int i = len - 1; i >= 0; i--) {
+            swap(nums, i, 0);
+            heapify1(nums, i, 0);
+
+        }
+        return nums;
+    }
+
+    private void heapify1(int[] nums, int len, int i) {
+        int largest = i;
+        int left = i * 2 + 1;
+        int right = i * 2 + 2;
+        if (left < len && nums[left] > nums[largest]) {
+            largest = left;
+        }
+        if (right < len && nums[right] > nums[largest]) {
+            largest = right;
+        }
+        if (largest != i){
+            swap(nums,largest,i);
+            heapify1(nums,len,largest);
+        }
+    }
+
+
+    private int[] heapSort(int[] nums) {
+        int len = nums.length;
+
+        for (int i = len / 2 - 1; i >= 0; i--) {
+            heapify3(nums, len, i);
+        }
+        for (int i = len - 1; i >= 0; i--) {
+            swap(nums, i, 0);
+            heapify3(nums, i, 0);
+        }
+
+        return nums;
+    }
+
+    private void heapify3(int[] nums, int len, int i) {
+        int largest = i;
+        int left = i * 2 + 1;
+        int right = i * 2 + 2;
+        if (left < len && nums[left] > nums[largest]) {
+            largest = left;
+        }
+        if (right < len && nums[right] > nums[largest]) {
+            largest = right;
+        }
+        if (largest != i) {
+            swap(nums, largest, i);
+            heapify(nums, len, largest);
+        }
+
+    }
+
     public int findKthLargest2(int[] nums, int k) {
         sort(nums);
         return nums[nums.length - k];

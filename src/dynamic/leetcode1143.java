@@ -3,6 +3,10 @@ package dynamic;
 import java.util.Arrays;
 
 public class leetcode1143 {
+
+    public int longestCommonSubsequence2(String text1, String text2) {
+
+    }
     public int longestCommonSubsequence1(String text1, String text2) {
         char[] c1 = text1.toCharArray();
         char[] c2 = text2.toCharArray();

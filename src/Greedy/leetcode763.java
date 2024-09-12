@@ -3,6 +3,47 @@ package Greedy;
 import java.util.*;
 
 public class leetcode763 {
+    public List<Integer> partitionLabels22(String s) {
+        int[] edge = new int[26];
+        char[] charArray = s.toCharArray();
+        for (int i = 0; i < charArray.length; i++) {
+            edge[charArray[i] - 'a'] = i;
+
+        }
+        int index = -1;
+        int end = 0;
+        ArrayList<Integer> ans = new ArrayList<>();
+        for (int i = 0; i < charArray.length; i++) {
+            end = Math.max(end, edge[charArray[i] - 'a']);
+            if (i == end) {
+                ans.add(i - index);
+                index = i;
+            }
+        }
+        return ans;
+    }
+
+    public List<Integer> partitionLabels2(String s) {
+        ArrayList<Integer> ans = new ArrayList<>();
+        int[] edge = new int[26];
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < chars.length; i++) {
+            char cur = chars[i];
+            edge[cur - 'a'] = i;
+        }
+        int end = 0;
+        int last = -1;
+        for (int i = 0; i < chars.length; i++) {
+            end = Math.max(end, edge[chars[i] - 'a']);
+            if (i == end) {
+                ans.add(i - last);
+                last = i;
+            }
+        }
+
+        return ans;
+    }
+
     public List<Integer> partitionLabels11(String S) {
         List<Integer> list = new LinkedList<>(); // 用于存储每个连续字符组的长度
         int[] edge = new int[26]; // 用于存储每个字母的右边界索引
@@ -17,7 +58,7 @@ public class leetcode763 {
         int last = -1; // 上一个分割点的索引
         // 遍历字符数组，确定每个字符组的右边界，并分割字符串
         for (int i = 0; i < chars.length; i++) {
-            idx = Math.max(idx,edge[chars[i] - 'a']); // 更新当前字符组的右边界
+            idx = Math.max(idx, edge[chars[i] - 'a']); // 更新当前字符组的右边界
             if (i == idx) { // 当达到当前字符组的右边界时，记录并添加该字符组的长度
                 list.add(i - last);
                 last = i;
@@ -25,6 +66,7 @@ public class leetcode763 {
         }
         return list;
     }
+
     public List<Integer> partitionLabels1(String s) {
         ArrayList<Integer> result = new ArrayList<>();
         if (s == null || s.length() <= 0) {
@@ -53,6 +95,7 @@ public class leetcode763 {
 
         return result;
     }
+
     /**
      * 对字符串进行分割，返回每个分割区间的长度。
      *
@@ -79,6 +122,7 @@ public class leetcode763 {
         res.add(right - left + 1);
         return res;
     }
+
     /**
      * 查找字符串的分区。该方法会将字符串中每个字符出现的区间记录下来。
      *
@@ -119,7 +163,6 @@ public class leetcode763 {
 
         return res;
     }
-
 
 
     public static void main(String[] args) {

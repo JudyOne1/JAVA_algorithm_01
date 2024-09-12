@@ -1,6 +1,47 @@
 package dynamic;
 
 public class leetcode198 {
+    /**
+     * 你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，
+     * 影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，
+     * 如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
+     * <p>
+     * 给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，
+     * 一夜之内能够偷窃到的最高金额。
+     */
+
+    public int rob2(int[] nums) {
+
+        int len = nums.length;
+        if (len == 1) {
+            return nums[1];
+        } else if (len == 2) {
+            return Math.max(nums[1], nums[2]);
+        }
+
+        int[] dp = new int[len + 1];
+        dp[len - 1] = nums[len - 1];
+        dp[len - 2] = Math.max(nums[len - 1], nums[len - 2]);
+
+        for (int i = len - 3; i >= 0; i--) {
+            dp[i] = Math.max(nums[i] + dp[i + 2], dp[i + 1]);
+        }
+        return dp[0];
+        //dp[i] = nums[i] + dp[i+2] | dp[i+1]
+//        return dfs2(nums, 0);
+    }
+
+    private int dfs2(int[] nums, int index) {
+        if (index == nums.length - 1) {
+            return nums[nums.length - 1];
+        } else if (index == nums.length - 2) {
+            return Math.max(nums[nums.length - 1], nums[nums.length - 2]);
+        }
+
+        return Math.max(nums[index] + dfs2(nums, index + 2), dfs2(nums, index + 1));
+    }
+
+
     public int rob1(int[] nums) {
         if (nums.length == 0) {
             return 0;
@@ -8,27 +49,28 @@ public class leetcode198 {
         if (nums.length == 1) {
             return nums[0];
         }
-        if (nums.length == 2){
-            return Math.max(nums[0],nums[1]);
+        if (nums.length == 2) {
+            return Math.max(nums[0], nums[1]);
         }
 
         int money = 0;
         int index = 0;
-        return dfs(nums,money,index);
+        return dfs(nums, money, index);
 
 
     }
 
     private int dfs(int[] nums, int money, int index) {
-        if (index >= nums.length){
+        if (index >= nums.length) {
             return money;
         }
-        if (index == nums.length - 1){
+        if (index == nums.length - 1) {
             return money + nums[index];
         }
-        return Math.max(dfs(nums,money,index+1),dfs(nums,money+nums[index],index+2));
+        return Math.max(dfs(nums, money, index + 1), dfs(nums, money + nums[index], index + 2));
     }
-    private int dp1(int[] nums){
+
+    private int dp1(int[] nums) {
         if (nums.length == 0) {
             return 0;
         }

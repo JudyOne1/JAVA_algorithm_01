@@ -1,6 +1,25 @@
 package dynamic;
 
 public class leetcode5 {
+    public String longestPalindrome3(String s) {
+        int length = s.length();
+        String result = "";
+        for (int i = 0; i < length * 2 - 1; i++) {
+            int left = i / 2;
+            int right = left + i % 2;
+            while (left >= 0 && right < length && s.charAt(left) == s.charAt(right)) {
+                String substring = s.substring(left, right + 1);
+                if (result.length() < substring.length()) {
+                    result = substring;
+                }
+                left--;
+                right++;
+            }
+
+        }
+
+        return result;
+    }
 
     public String longestPalindrome2(String s) {
         int len = s.length();
@@ -18,8 +37,6 @@ public class leetcode5 {
             }
         }
         return result;
-
-
     }
 
 
