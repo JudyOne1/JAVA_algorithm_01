@@ -5,8 +5,62 @@ import java.util.Arrays;
 public class leetcode1143 {
 
     public int longestCommonSubsequence2(String text1, String text2) {
-
+        char[] charArray1 = text1.toCharArray();
+        char[] charArray2 = text2.toCharArray();
+        int m = text1.length();
+        int n = text2.length();
+        int[][] dp = new int[m + 1][n + 1];
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (charArray1[i - 1] == charArray2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j]);
+                }
+            }
+        }
+        return dp[m - 1][n - 1];
     }
+
+    /**
+     * for 循环从 1 开始，直到 N 和 M 结束。
+     * 如果当前字符相等 (charArray1[i - 1] == charArray2[j - 1])，
+     * 则最长公共子序列长度为前一个状态加 1 (1 + dp[i - 1][j - 1])。
+     * 如果当前字符不相等，则最长公共子序列长度取前一个状态中的最大值
+     * (Math.max(dp[i - 1][j], dp[i][j - 1]))。
+     *
+     * 从 1 开始循环，这样可以直接使用 i - 1 和 j - 1 访问字符数组中的元素。
+     * 初始化二维数组 dp，其中 dp[i][j] 表示 text1 的前 i 个字符与 text2 的前 j 个字符的最长公共子序列的长度。
+     * 数组大小为 N + 1 和 M + 1，这样 dp[0][0] 到 dp[0][M] 和 dp[N][0] 自然为 0。
+     *
+     * for 循环从 1 开始，直到 N 和 M 结束。
+     * 如果当前字符相等 (charArray1[i - 1] == charArray2[j - 1])，则最长公共子序列长度为前一个状态加 1 (1 + dp[i - 1][j - 1])。
+     * 如果当前字符不相等，则最长公共子序列长度取前一个状态中的最大值 (Math.max(dp[i - 1][j], dp[i][j - 1]))。
+     *
+     * @param text1
+     * @param text2
+     * @return
+     */
+
+    public int dp2(String text1, String text2) {
+        char[] charArray1 = text1.toCharArray();
+        char[] charArray2 = text2.toCharArray();
+        int N = charArray1.length;
+        int M = charArray2.length;
+        int[][] dp = new int[N + 1][M + 1];
+
+        for (int i = 1; i <= N; i++) {
+            for (int j = 1; j <= M; j++) {
+                if (charArray1[i - 1] == charArray2[j - 1]) {
+                    dp[i][j] = dp[i - 1][j - 1] + 1;
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        return dp[N][M];
+    }
+
     public int longestCommonSubsequence1(String text1, String text2) {
         char[] c1 = text1.toCharArray();
         char[] c2 = text2.toCharArray();
