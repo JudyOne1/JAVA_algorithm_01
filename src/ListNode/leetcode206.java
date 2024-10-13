@@ -7,6 +7,34 @@ import java.util.List;
 
 public class leetcode206 {
 
+    public ListNode reverseList4(ListNode head) {
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode pre = null;
+        ListNode cur = head;
+        while (cur!=null){
+            ListNode next = cur.next;
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+        }
+        return cur;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public ListNode reverseList3(ListNode head) {
         ListNode pre = null;
         ListNode cur = head;

@@ -7,6 +7,82 @@ import java.util.Map;
  *
  */
 class LRUCache {
+    class LRUCache1 {
+        int capacity;
+        HashMap<Integer,Node> map = new HashMap<>();
+        class Node{
+            int key,value;
+            Node pre,next;
+            Node(int key,int value){
+                this.key = key;
+                this.value = value;
+            }
+        }
+        Node dummy = new Node(0,0);
+        public LRUCache1(int capacity) {
+            this.capacity = capacity;
+            dummy.next = dummy;
+            dummy.pre = dummy;
+        }
+
+
+        public int get(int key) {
+            Node node = getNode(key);
+            if(node == null){
+                return -1;
+            }else{
+                return node.value;
+            }
+        }
+
+        public void put(int key, int value) {
+            Node node = getNode(key);
+            if(node == null){
+                Node newNode = new Node(key,value);
+                map.put(key,newNode);
+                put2First(newNode);
+                if(map.size()>capacity){
+                    map.remove(dummy.pre.key);
+                    remove(dummy.pre);
+
+                }
+                return;
+            }else{
+                node.value = value;
+                return;
+            }
+        }
+
+        public void remove(Node node){
+            Node pre = node.pre;
+            Node next = node.next;
+            pre.next = next;
+            next.pre = pre;
+        }
+        public Node getNode(int key){
+            if(map.containsKey(key)){
+                Node node = map.get(key);
+
+                remove(node);
+                put2First(node);
+
+                return node;
+            }else{
+                return null;
+            }
+
+        }
+        public void put2First(Node node){
+            Node next = dummy.next;
+            node.pre = dummy;
+            node.next = next;
+            next.pre = node;
+            dummy.next = node;
+        }
+    }
+
+
+    // 双向链表
     //Node,capacity,dummy,map
     //get,put,remove,getNode,pushFront
     //put->getNode->pushFront->remove(map & node)

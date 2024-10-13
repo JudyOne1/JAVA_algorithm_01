@@ -1,6 +1,66 @@
 package ListNode;
 
+import java.util.List;
+
 public class leetcode25 {
+
+
+    public ListNode reverseKGroup5(ListNode head, int k) {
+        //翻转链表+指定位置
+        //for指定反转次数，指定位置翻转，并且前后节点互换链接
+        ListNode cur = head;
+        int count = 0;
+        while (cur != null){
+            count++;
+            cur = cur.next;
+        }
+        ListNode dummy = new ListNode();
+        dummy.next = head;
+        ListNode p0 = dummy;
+        ListNode pre = null;
+        cur = head;
+        for (int i = 0; i < count / k; i++) {
+            //翻转
+            int index = 0;
+            while (index<k){
+                // pre - cur - temp
+                ListNode temp = cur.next;
+                cur.next = pre;
+
+                pre = cur;
+                cur = temp;
+                index++;
+            }
+            ListNode next = cur;
+
+            //p0 -|- p0Head - pre -|- cur
+
+            //连接
+            ListNode p0Head = p0.next;
+            p0.next = pre;
+            p0Head.next = cur;
+            p0 = p0Head;
+
+
+        }
+
+        return dummy.next;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public ListNode reverseKGroup4(ListNode head, int k) {
         ListNode dummy = new ListNode(0, head);

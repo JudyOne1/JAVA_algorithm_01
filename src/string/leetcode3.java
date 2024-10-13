@@ -5,6 +5,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class leetcode3 {
+    public int lengthOfLongestSubstring5(String s) {
+//定义一个visit数组，来过了对应位置+1；离开对应位置-1
+//滑动窗口for(right),字母是否在visit里面，在的话收缩左边
+        boolean[] visited = new boolean[128];
+        int left = 0;
+        int max = 0;
+        for (int right = 0; right < s.length(); right++) {
+            char cur = s.charAt(right);
+            while (visited[cur]){
+                char leftChar = s.charAt(left);
+                visited[leftChar] =false;
+                left++;
+            }
+            visited[cur] = true;
+            max = Math.max(max,right-left+1);
+        }
+        return max;
+    }
 
     public int lengthOfLongestSubstring4(String s) {
         boolean[] has = new boolean[128];

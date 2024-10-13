@@ -5,6 +5,36 @@ import java.util.Arrays;
 import java.util.List;
 
 public class leetcode15 {
+    public List<List<Integer>> threeSum4(int[] nums) {
+        //先排序，然后i,left,right，left= i+1,right = n
+        //left<right的情况sum，与0判断控制指针移动
+        //注意相同元素需要跳过
+        List<List<Integer>> ans = new ArrayList<>();
+        Arrays.sort(nums);
+        int n = nums.length;
+        int left,right;
+        for (int i = 0; i < n; i++) {
+            if (i > 0 && nums[i] == nums[i - 1]) continue;
+            left = i + 1;
+            right = n - 1;
+            while (left<right){
+                int sum = nums[i]+nums[left]+nums[right];
+                if (sum > 0) {
+                    right--;
+                } else if (sum < 0) {
+                    left++;
+                } else {
+                    ans.add(Arrays.asList(nums[i], nums[left], nums[right]));
+                    right--;
+                    left++;
+                    while (left < right && nums[right] == nums[right + 1]) right--;
+                    while (left < right && nums[left] == nums[left - 1]) left++;
+                }
+            }
+
+        }
+        return ans;
+    }
 
     public List<List<Integer>> threeSum3(int[] nums) {
         ArrayList<List<Integer>> ans = new ArrayList<>();

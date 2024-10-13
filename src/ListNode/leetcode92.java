@@ -1,6 +1,44 @@
 package ListNode;
 
 public class leetcode92 {
+    public ListNode reverseBetween3(ListNode head, int left, int right) {
+        //找到left的位置，翻转left到right的链表，整体翻转
+        ListNode dummy = new ListNode(0,head);
+        ListNode first = head;
+        int count = 1;
+        ListNode p0 = dummy;
+        while (count < left){
+            first = first.next;
+            p0 = p0.next;
+            count++;
+        }
+        //p0 - first - pre -cur
+        count = 0;
+        ListNode pre = null;
+        ListNode cur = first;
+        while (count < right-left+1){
+            ListNode temp = cur.next;
+            cur.next = pre;
+
+            pre = cur;
+            cur = temp;
+            count++;
+        }
+        ListNode p0Head = p0.next;
+        p0Head.next = cur;
+        p0.next = pre;
+
+        return dummy.next;
+
+    }
+
+
+
+
+
+
+
+
     public ListNode reverseBetween2(ListNode head, int left, int right) {
         ListNode dummy = new ListNode(0, head);
         ListNode cur = dummy;
